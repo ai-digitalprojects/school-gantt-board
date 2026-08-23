@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>בית ספר גבים · לוח גאנט בית ספרי</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;800&family=Heebo:wght@400;500;600;700;800&display=swap">
+
+<style>
+/* ============================================================
+   טוקנים
+   ============================================================ */
+:root{
+  --bg:#F4F6F9;
+  --panel:#FFFFFF;
+  --sunken:#F8FAFC;
+  --ink:#15202B;
+  --ink-2:#3D4C5C;
+  --muted:#6B7C8D;
+  --line:#E6ECF2;
+  --line-2:#D5DFE8;
+  --brand:#1D5B73;
+  --brand-2:#2A7E9B;
+  --brand-tint:#E8F2F6;
+  --navy:#1A2332;
+  --navy-2:#131B27;
+  --gold:#D4A93C;
+  --navy-ink:#FFFFFF;
+  --navy-sub:#A9B7C8;
+  --ok:#0B6B58;
+  --err:#A8412A;
+  --err-bg:#FBEEEA;
+  --err-line:#EDCFC5;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
+
+  --r-sm:6px; --r:10px; --r-lg:14px;
+
+  --sh-1:0 1px 2px rgba(21,32,43,.05);
+  --sh-2:0 2px 8px rgba(21,32,43,.07);
+  --sh-3:0 8px 24px rgba(21,32,43,.12);
+
+  --catw:180px;
+  --cols:12;
+  --colmin:100px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  font-family:Heebo,'Segoe UI',Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:var(--s6);
+}
+
+.wrap{max-width:1440px;margin:0 auto;padding:0 var(--s4);}
+
+button,input,select{font-family:inherit;font-size:inherit;color:inherit;}
+
+:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px;border-radius:var(--r-sm);}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+/* ============================================================
+   כותרת עליונה
+   ============================================================ */
+.topbar{
+  background:linear-gradient(165deg,var(--navy-2) 0%,var(--navy) 60%,#22304A 100%);
+  border-bottom:3px solid var(--gold);
+}
+.topbar-in{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s4);
+  flex-wrap:wrap;padding:16px 0 18px;
+}
+.brandline{display:flex;align-items:center;gap:var(--s3);margin-bottom:5px;}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--gold);
+  text-transform:uppercase;
+}
+.ro-tag{
+  font-size:10.5px;font-weight:600;color:var(--navy-sub);letter-spacing:.06em;
+  border:1px solid rgba(255,255,255,.26);padding:2px 9px;border-radius:999px;
+}
+h1{
+  font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif;
+  font-size:34px;font-weight:800;margin:0;line-height:1.1;color:var(--navy-ink);
+}
+.subtitle{margin:7px 0 0;color:var(--navy-sub);font-size:13.5px;}
+
+.topbar-actions{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;}
+.stamp{font-size:11.5px;color:var(--navy-sub);text-align:left;}
+.stamp b{display:block;color:#E6EDF5;font-weight:600;font-size:12.5px;}
+
+/* כפתורים על רקע כהה */
+.topbar .btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#E6EDF5;}
+.topbar .btn:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);}
+.topbar .btn-primary{background:var(--gold);border-color:var(--gold);color:#1A2332;font-weight:700;}
+.topbar .btn-primary:hover:not(:disabled){background:#E0B849;border-color:#E0B849;}
+.topbar :focus-visible{outline-color:var(--gold);}
+
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line-2);background:var(--panel);color:var(--ink-2);
+  padding:8px 14px;border-radius:var(--r-sm);cursor:pointer;font-weight:500;
+  transition:background .13s ease,border-color .13s ease,box-shadow .13s ease;
+}
+.btn:hover{background:var(--sunken);border-color:#C3D0DB;}
+.btn:disabled{opacity:.55;cursor:default;}
+.btn svg{display:block;flex:none;}
+.btn-primary{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:var(--sh-1);}
+.btn-primary:hover:not(:disabled){background:#17495C;border-color:#17495C;}
+.btn.busy svg{animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ============================================================
+   הודעות מצב
+   ============================================================ */
+.status{margin:var(--s3) 0 0;font-size:13px;}
+.status:empty{display:none;}
+.status.ok{color:var(--ok);}
+.status.err{
+  background:var(--err-bg);border:1px solid var(--err-line);color:var(--err);
+  border-radius:var(--r);padding:var(--s3) var(--s4);line-height:1.6;
+}
+.status.err b{display:block;margin-bottom:2px;font-size:14px;}
+
+/* ============================================================
+   כרטיסי סיכום
+   ============================================================ */
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);
+  margin:var(--s5) 0 var(--s4);
+}
+.metric{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:var(--s3) var(--s4);display:flex;align-items:center;gap:var(--s3);
+  box-shadow:var(--sh-1);
+}
+.metric-ic{
+  width:34px;height:34px;border-radius:9px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--brand-tint);color:var(--brand);
+}
+.metric-ic svg{width:17px;height:17px;}
+.metric-num{font-size:22px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums;}
+.metric-lbl{font-size:12px;color:var(--muted);margin-top:1px;}
+
+/* ============================================================
+   סרגל סינון
+   ============================================================ */
+.toolbar{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:var(--s3) var(--s4);box-shadow:var(--sh-1);margin-bottom:var(--s4);
+}
+.toolbar-row{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;}
+
+.search{position:relative;flex:1 1 260px;min-width:200px;max-width:380px;}
+.search svg{
+  position:absolute;right:11px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--muted);pointer-events:none;
+}
+.search input{
+  width:100%;padding:9px 34px 9px 12px;border:1px solid var(--line-2);
+  border-radius:var(--r-sm);background:var(--sunken);
+}
+.search input:focus{background:var(--panel);}
+
+.field{display:flex;align-items:center;gap:6px;}
+.field label{font-size:12.5px;color:var(--muted);}
+select{
+  padding:8px 10px;border:1px solid var(--line-2);border-radius:var(--r-sm);
+  background:var(--sunken);cursor:pointer;
+}
+
+.spacer{flex:1 1 auto;}
+
+.segmented{display:flex;background:var(--sunken);border:1px solid var(--line-2);border-radius:var(--r-sm);padding:2px;gap:2px;}
+.segmented button{
+  border:none;background:transparent;padding:6px 14px;border-radius:5px;
+  cursor:pointer;font-weight:500;color:var(--muted);
+}
+.segmented button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:var(--sh-1);font-weight:600;}
+
+.chips{
+  display:flex;flex-wrap:wrap;gap:var(--s2);
+  margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--line);
+}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid transparent;background:var(--sunken);color:var(--ink-2);
+  padding:5px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;font-weight:500;
+  transition:opacity .12s ease,box-shadow .12s ease;
+}
+.chip .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+.chip .n{font-size:11.5px;opacity:.7;font-variant-numeric:tabular-nums;}
+.chip[aria-pressed="false"]{opacity:.42;background:var(--sunken);color:var(--muted);}
+.chip[aria-pressed="false"] .dot{background:var(--line-2) !important;}
+.chips-hint{font-size:12px;color:var(--muted);align-self:center;}
+
+/* ============================================================
+   לוח הגאנט
+   ============================================================ */
+.board{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--sh-2);overflow:hidden;
+}
+.board-title{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
+  padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);flex-wrap:wrap;
+}
+.board-title h2{font-size:15px;font-weight:700;margin:0;}
+.board-title .meta{font-size:12.5px;color:var(--muted);}
+
+.scroller{overflow:auto;max-height:min(72vh,680px);}
+.inner{position:relative;}
+/* רוחב מינימלי נדרש רק בתצוגות הרשת - ברשימה ובמובייל הוא גורם לגלילה מיותרת */
+.inner.is-grid{min-width:calc(var(--catw) + var(--cols) * var(--colmin));}
+
+.row{display:grid;grid-template-columns:var(--catw) minmax(0,1fr);border-bottom:1px solid var(--line);}
+.row:last-child{border-bottom:none;}
+
+/* שורת החודשים - נדבקת למעלה */
+.head-row{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line-2);}
+.head-cat{
+  position:sticky;right:0;z-index:6;background:var(--panel);
+  border-left:1px solid var(--line-2);
+  padding:10px var(--s4);font-size:12.5px;font-weight:600;color:var(--muted);
+  display:flex;align-items:center;
+}
+.head-cols{display:grid;grid-template-columns:repeat(var(--cols),minmax(var(--colmin),1fr));}
+.head-cols span{
+  padding:10px 4px;text-align:center;font-size:12.5px;font-weight:600;color:var(--ink-2);
+  border-right:1px solid var(--line);
+}
+.head-cols span:first-child{border-right:none;}
+.head-cols span.now{color:var(--brand);background:var(--brand-tint);box-shadow:inset 0 -2px 0 var(--brand-2);}
+.head-cols span small{display:block;font-size:10.5px;font-weight:500;color:var(--muted);}
+.head-cols span.now small{color:var(--brand);}
+
+/* תא התחום - נדבק לימין */
+.cat-cell{
+  position:sticky;right:0;z-index:2;
+  padding:var(--s3) var(--s4);border-left:1px solid var(--line-2);
+  display:flex;flex-direction:column;justify-content:center;gap:2px;
+  background:var(--cat-tint,var(--sunken));
+}
+.cat-cell::before{
+  content:"";position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--cat,var(--line-2));
+}
+.cat-name{display:flex;align-items:center;gap:7px;font-weight:600;font-size:13px;line-height:1.3;}
+.cat-name .dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--cat);}
+.cat-count{font-size:11.5px;color:var(--muted);padding-right:16px;}
+
+.track{
+  position:relative;
+  display:grid;grid-template-columns:repeat(var(--cols),minmax(var(--colmin),1fr));
+  grid-auto-flow:row dense;          /* אריזה צפופה - פחות שורות ריקות */
+  gap:var(--s2);align-content:start;
+  padding:var(--s3) var(--s2);min-height:76px;
+}
+.gridlines{position:absolute;inset:0;pointer-events:none;}
+.gridlines i{position:absolute;top:0;bottom:0;width:1px;background:var(--line);}
+.gridlines i.month-now{background:var(--brand-tint);width:auto;}
+
+.today{position:absolute;top:0;bottom:0;width:2px;background:var(--brand-2);z-index:4;pointer-events:none;}
+.today::after{
+  content:"היום";position:absolute;top:2px;right:50%;transform:translateX(50%);
+  background:var(--brand-2);color:#fff;font-size:10px;font-weight:600;
+  padding:1px 6px;border-radius:999px;white-space:nowrap;
+}
+
+/* כרטיס אירוע */
+.ev{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+  text-align:right;min-width:0;overflow:hidden;
+  background:var(--tint);border:1px solid var(--edge);border-right:3px solid var(--c);
+  border-radius:var(--r-sm);padding:6px 10px;cursor:pointer;
+  min-height:46px;justify-content:center;
+  box-shadow:var(--sh-1);
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.ev:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
+.ev-name{
+  font-weight:600;font-size:12.5px;color:var(--tx);line-height:1.3;
+  max-width:100%;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow-wrap:anywhere;
+}
+.ev-date{
+  font-size:11px;font-weight:500;color:var(--tx);opacity:.72;
+  font-variant-numeric:tabular-nums;unicode-bidi:isolate;
+}
+
+/* ============================================================
+   תצוגת רשימה
+   ============================================================ */
+.list-wrap{padding:var(--s2) 0;}
+.lrow{
+  display:grid;grid-template-columns:150px minmax(0,1fr) 190px;
+  gap:var(--s3);align-items:center;width:100%;
+  padding:11px var(--s4);border:none;border-bottom:1px solid var(--line);
+  background:var(--panel);cursor:pointer;text-align:right;
+}
+.lrow:last-child{border-bottom:none;}
+.lrow:hover{background:var(--sunken);}
+.lrow-date{font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.lrow-name{font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:8px;min-width:0;}
+.lrow-name .dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--c);}
+.lrow-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tag{
+  display:inline-flex;align-items:center;gap:6px;justify-self:start;
+  background:var(--chip);color:var(--tx);font-size:11.5px;font-weight:600;
+  padding:3px 10px;border-radius:999px;
+}
+.tag .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none;}
+.list-head{
+  display:grid;grid-template-columns:150px minmax(0,1fr) 190px;gap:var(--s3);
+  padding:9px var(--s4);font-size:12px;font-weight:600;color:var(--muted);
+  background:var(--sunken);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:2;
+}
+
+/* ============================================================
+   תצוגת מובייל - כרטיסים לפי חודש
+   ============================================================ */
+.mgroup{border-bottom:1px solid var(--line);}
+.mgroup:last-child{border-bottom:none;}
+.mgroup-h{
+  position:sticky;top:0;z-index:2;background:var(--sunken);
+  padding:8px var(--s4);font-size:12.5px;font-weight:700;color:var(--ink-2);
+  border-bottom:1px solid var(--line);display:flex;justify-content:space-between;
+}
+.mgroup-h span{color:var(--muted);font-weight:500;}
+.mcards{padding:var(--s3) var(--s4);display:flex;flex-direction:column;gap:var(--s2);}
+.mcard{
+  display:flex;flex-direction:column;gap:3px;width:100%;text-align:right;
+  background:var(--tint);border:1px solid var(--edge);border-right:3px solid var(--c);
+  border-radius:var(--r-sm);padding:10px 12px;cursor:pointer;
+}
+.mcard-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);}
+.mcard-name{font-weight:600;font-size:14px;color:var(--tx);}
+.mcard-date{font-size:12px;color:var(--tx);opacity:.75;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+
+/* ============================================================
+   מצב ריק
+   ============================================================ */
+.empty{padding:var(--s6) var(--s4);text-align:center;color:var(--muted);}
+.empty svg{width:34px;height:34px;color:var(--line-2);margin-bottom:var(--s2);}
+.empty p{margin:0 0 var(--s3);font-size:14px;}
+
+/* ============================================================
+   אירועים קרובים
+   ============================================================ */
+.upcoming{margin-top:var(--s5);}
+.sec-h{display:flex;align-items:baseline;gap:var(--s2);margin-bottom:var(--s3);}
+.sec-h h2{font-size:15px;font-weight:700;margin:0;}
+.sec-h span{font-size:12.5px;color:var(--muted);}
+.up-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);}
+.up-card{
+  background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--c);
+  border-radius:var(--r);padding:var(--s3);text-align:right;cursor:pointer;
+  display:flex;flex-direction:column;gap:6px;box-shadow:var(--sh-1);
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.up-card:hover{transform:translateY(-2px);box-shadow:var(--sh-2);}
+.up-when{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.up-name{font-weight:600;font-size:13.5px;line-height:1.35;}
+
+/* ============================================================
+   מגירת פרטים
+   ============================================================ */
+.backdrop{
+  position:fixed;inset:0;background:rgba(21,32,43,.42);z-index:40;
+  opacity:0;pointer-events:none;transition:opacity .18s ease;
+}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{
+  position:fixed;top:0;bottom:0;right:0;width:min(390px,92vw);z-index:41;
+  background:var(--panel);box-shadow:var(--sh-3);
+  transform:translateX(100%);transition:transform .22s ease;
+  display:flex;flex-direction:column;
+}
+.drawer.open{transform:translateX(0);}
+.drawer-h{
+  padding:var(--s4);border-bottom:1px solid var(--line);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s3);
+}
+.drawer-h h3{margin:0;font-size:17px;font-weight:700;line-height:1.3;}
+.icon-btn{
+  border:none;background:transparent;color:var(--muted);cursor:pointer;
+  padding:4px;border-radius:var(--r-sm);line-height:0;flex:none;
+}
+.icon-btn:hover{background:var(--sunken);color:var(--ink);}
+.drawer-b{padding:var(--s4);overflow-y:auto;display:flex;flex-direction:column;gap:var(--s4);}
+.dfield dt{font-size:12px;color:var(--muted);margin-bottom:2px;}
+.dfield dd{margin:0;font-size:14px;font-weight:500;font-variant-numeric:tabular-nums;}
+.dfield dd[dir="ltr"]{unicode-bidi:isolate;}
+
+.foot{margin-top:var(--s5);font-size:12px;color:var(--muted);text-align:center;}
+
+/* ============================================================
+   רספונסיביות
+   ============================================================ */
+@media (max-width:1100px){
+  .metrics{grid-template-columns:repeat(2,1fr);}
+  .up-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:767px){
+  body{font-size:13.5px;}
+  .wrap{padding:0 var(--s3);}
+  .topbar-in{padding:14px 0 16px;gap:var(--s3);}
+  h1{font-size:26px;}
+  .subtitle{font-size:12.5px;line-height:1.5;}
+  .eyebrow{font-size:10px;letter-spacing:.16em;}
+  .topbar-actions{width:100%;justify-content:space-between;}
+  .metrics{gap:var(--s2);margin:var(--s4) 0 var(--s3);}
+  .metric{padding:var(--s2) var(--s3);gap:var(--s2);}
+  .metric-ic{width:28px;height:28px;border-radius:8px;}
+  .metric-num{font-size:18px;}
+  .metric-lbl{font-size:11px;}
+  .toolbar{padding:var(--s3);border-radius:var(--r);}
+  .search{max-width:none;flex:1 1 100%;}
+  .field{flex:1 1 100%;}
+  .field select{flex:1;}
+  .segmented{width:100%;}
+  .segmented button{flex:1;padding:8px 6px;}
+  .scroller{max-height:none;}
+  .list-head,.lrow{grid-template-columns:104px minmax(0,1fr);}
+  .list-head span:last-child,.lrow .tag{display:none;}
+  .up-grid{grid-template-columns:1fr;}
+  .drawer{width:100%;}
+}
+
+/* ============================================================
+   הדפסה
+   ============================================================ */
+@media print{
+  body{background:#fff;padding:0;}
+  /* בהדפסה הבאנר הופך לבן, כדי לא לשפוך דיו על רקע כהה */
+  .topbar{background:#fff !important;border-bottom:2px solid var(--navy);}
+  h1{color:var(--navy) !important;font-size:24px;}
+  .subtitle{color:#4A5A6B !important;}
+  .eyebrow{color:#9A7B1E !important;}
+  .ro-tag{color:#4A5A6B !important;border-color:#B9C4CF;}
+  .topbar-actions,.toolbar,.upcoming,.backdrop,.drawer,.status,.foot{display:none !important;}
+  .board{border:none;box-shadow:none;}
+  .scroller{max-height:none;overflow:visible;}
+  .metrics{margin:8px 0;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <div>
+      <div class="brandline">
+        <span class="eyebrow">בית ספר גבים</span>
+        <span class="ro-tag">תצוגה בלבד</span>
+      </div>
+      <h1>לוח גאנט</h1>
+      <p class="subtitle">לוח גאנט בית ספרי · שנת הלימודים תשפ״ז | ספטמבר 2026 – אוגוסט 2027</p>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="stamp" id="stamp"></div>
+      <button class="btn btn-primary" id="refreshBtn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12a9 9 0 1 1-2.64-6.36"></path><polyline points="21 3 21 9 15 9"></polyline>
+        </svg>
+        רענון נתונים
+      </button>
+      <button class="btn" id="printBtn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        הדפסה
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+
+  <section class="metrics" id="metrics" aria-label="נתוני סיכום"></section>
+
+  <section class="toolbar" aria-label="סינון וניווט">
+    <div class="toolbar-row">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input type="search" id="search" placeholder="חיפוש אירוע או תחום..." aria-label="חיפוש אירוע או תחום">
+      </div>
+
+      <div class="field">
+        <label for="monthSel">חודש</label>
+        <select id="monthSel"></select>
+      </div>
+
+      <button class="btn" id="resetBtn" type="button">איפוס סינון</button>
+
+      <div class="spacer"></div>
+
+      <div class="segmented" role="group" aria-label="מצב תצוגה">
+        <button type="button" data-view="year" aria-pressed="true">שנתי</button>
+        <button type="button" data-view="month" aria-pressed="false">חודשי</button>
+        <button type="button" data-view="list" aria-pressed="false">רשימה</button>
+      </div>
+    </div>
+
+    <div class="chips" id="chips" role="group" aria-label="סינון לפי תחום"></div>
+  </section>
+
+  <section class="board" aria-label="לוח גאנט">
+    <div class="board-title">
+      <h2 id="boardTitle">תכנית שנתית</h2>
+      <span class="meta" id="boardMeta"></span>
+    </div>
+    <div class="scroller" id="scroller">
+      <div class="inner" id="inner">
+        <div class="empty"><p>טוען נתונים…</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="upcoming" id="upcoming" hidden>
+    <div class="sec-h">
+      <h2>אירועים קרובים</h2>
+      <span>חמשת האירועים הבאים</span>
+    </div>
+    <div class="up-grid" id="upGrid"></div>
+  </section>
+
+  <p class="foot">מקור הנתונים הוא הגיליון המפורסם · הלוח משקף את מה שהיה בו ברגע הרענון האחרון</p>
+</main>
+
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-h">
+    <h3 id="drawerTitle"></h3>
+    <button class="icon-btn" id="drawerClose" type="button" aria-label="סגירה">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+    </button>
+  </div>
+  <div class="drawer-b" id="drawerBody"></div>
+</aside>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     1. הגדרות ומקור הנתונים (ללא שינוי - האינטגרציה עובדת)
+     ============================================================ */
+
+  var SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSPZ3E3aK-Yo8vUYHlgu2s-21H9LVh_ddXR_a3jjfSUaHimCEOkM319pa7zFTyoUbNNP4lQf7KZMQe7/pub?gid=106625122&single=true&output=csv";
+
+  var YEAR_START = new Date(2026, 8, 1);   // 1 בספטמבר 2026
+  var YEAR_END   = new Date(2027, 7, 31);  // 31 באוגוסט 2027
+  var MS_DAY = 86400000;
+  var TOTAL_DAYS = Math.round((YEAR_END - YEAR_START) / MS_DAY) + 1;
+
+  var MONTHS = [
+    { name: "ספטמבר", days: 30, y: 2026, m: 8 },
+    { name: "אוקטובר", days: 31, y: 2026, m: 9 },
+    { name: "נובמבר", days: 30, y: 2026, m: 10 },
+    { name: "דצמבר", days: 31, y: 2026, m: 11 },
+    { name: "ינואר", days: 31, y: 2027, m: 0 },
+    { name: "פברואר", days: 28, y: 2027, m: 1 },
+    { name: "מרץ", days: 31, y: 2027, m: 2 },
+    { name: "אפריל", days: 30, y: 2027, m: 3 },
+    { name: "מאי", days: 31, y: 2027, m: 4 },
+    { name: "יוני", days: 30, y: 2027, m: 5 },
+    { name: "יולי", days: 31, y: 2027, m: 6 },
+    { name: "אוגוסט", days: 31, y: 2027, m: 7 }
+  ];
+
+  var WEEKDAYS = ["א", "ב", "ג", "ד", "ה", "ו", "ש"];
+
+  var HEADER_KEYS = {
+    id:    ["ID", "מזהה"],
+    name:  ["שם האירוע"],
+    start: ["תאריך התחלה"],
+    end:   ["תאריך סיום"],
+    cat:   ["תחום"],
+    notes: ["הערות", "הערה"]
+  };
+
+  /* ============================================================
+     2. מערכת הצבעים - גוון קבוע לכל תחום, בכל מקום בממשק
+     ============================================================ */
+
+  // [גוון, רוויה] - לכל תחום גוון נפרד ורווי, כך שכל אחד מזוהה במבט אחד.
+  // הגוונים פרושים סביב גלגל הצבעים ולא מרוכזים בטווח אחד.
+  var CATEGORY_HUES = {
+    "ישיבות פדגוגיות":    [243, 62],  // אינדיגו
+    "מבחנים והערכה":      [208, 80],  // כחול
+    "ימי הורים":          [174, 72],  // טורקיז
+    "מצוינות":            [145, 62],  // ירוק
+    "הנהגת הורים":        [42,  85],  // חרדל־זהב
+    "חגים ומועדים":       [278, 52],  // סגול
+    "אירועים בית־ספריים": [24,  82],  // כתום
+    "משימות הנהלה":       [348, 62],  // ורוד־אדמדם
+    "ימי זיכרון":         [216, 22]   // כחול־אפור מאופק
+  };
+
+  var colorCache = {};
+
+  // תחום שאינו ברשימה מקבל גוון קריר יציב, נגזר משמו
+  function hueFromName(name) {
+    var h = 0;
+    for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 100000;
+    return 140 + (h % 145);   // 140-285: ירוק, טורקיז, כחול, סגול
+  }
+
+  function catColor(name) {
+    if (colorCache[name]) return colorCache[name];
+
+    var spec = CATEGORY_HUES[name] || [hueFromName(name), 68];
+    var h = spec[0], s = spec[1];
+
+    // גוונים חמים (זהב/כתום) נראים בהירים מדי בבהירות זהה, ולכן מוכהים מעט
+    var warm = (h < 65 || h > 330);
+    var strongL = warm ? 38 : 43;
+
+    var c = {
+      strong: "hsl(" + h + "," + s + "%," + strongL + "%)",
+      tint:   "hsl(" + h + "," + Math.min(s, 78) + "%,95%)",
+      chip:   "hsl(" + h + "," + Math.min(s, 74) + "%,87%)",
+      edge:   "hsl(" + h + "," + Math.min(s, 66) + "%,80%)",
+      text:   "hsl(" + h + "," + Math.min(s, 70) + "%," + (warm ? 24 : 26) + "%)"
+    };
+    colorCache[name] = c;
+    return c;
+  }
+
+  function paint(el, name) {
+    var c = catColor(name);
+    el.style.setProperty("--c", c.strong);
+    el.style.setProperty("--tint", c.tint);
+    el.style.setProperty("--chip", c.chip);
+    el.style.setProperty("--edge", c.edge);
+    el.style.setProperty("--tx", c.text);
+  }
+
+  /* ============================================================
+     3. מצב היישום
+     ============================================================ */
+
+  var state = {
+    events: [],
+    categories: [],          // סדר קבוע להצגה
+    hidden: {},              // תחומים שסוננו החוצה
+    search: "",
+    month: "all",            // "all" או אינדקס חודש
+    monthAuto: false,        // האם החודש נבחר אוטומטית עבור התצוגה החודשית
+    view: "year",            // year | month | list
+    mobile: false,
+    loadError: false
+  };
+
+  var el = {
+    status: document.getElementById("status"),
+    stamp: document.getElementById("stamp"),
+    metrics: document.getElementById("metrics"),
+    chips: document.getElementById("chips"),
+    search: document.getElementById("search"),
+    monthSel: document.getElementById("monthSel"),
+    resetBtn: document.getElementById("resetBtn"),
+    refreshBtn: document.getElementById("refreshBtn"),
+    printBtn: document.getElementById("printBtn"),
+    scroller: document.getElementById("scroller"),
+    inner: document.getElementById("inner"),
+    boardTitle: document.getElementById("boardTitle"),
+    boardMeta: document.getElementById("boardMeta"),
+    upcoming: document.getElementById("upcoming"),
+    upGrid: document.getElementById("upGrid"),
+    backdrop: document.getElementById("backdrop"),
+    drawer: document.getElementById("drawer"),
+    drawerTitle: document.getElementById("drawerTitle"),
+    drawerBody: document.getElementById("drawerBody"),
+    drawerClose: document.getElementById("drawerClose")
+  };
+
+  /* ============================================================
+     4. עזרי תאריך
+     ============================================================ */
+
+  function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function toDate(iso) {
+    var p = iso.split("-");
+    return new Date(+p[0], +p[1] - 1, +p[2]);
+  }
+
+  function dayOffset(iso) {
+    var diff = Math.round((toDate(iso) - YEAR_START) / MS_DAY);
+    if (diff < 0) diff = 0;
+    if (diff > TOTAL_DAYS - 1) diff = TOTAL_DAYS - 1;
+    return diff;
+  }
+
+  // אינדקס החודש בשנת הלימודים (0 = ספטמבר)
+  function monthIndex(iso) {
+    var d = toDate(iso);
+    var idx = (d.getFullYear() - 2026) * 12 + d.getMonth() - 8;
+    if (idx < 0) idx = 0;
+    if (idx > 11) idx = 11;
+    return idx;
+  }
+
+  function shortDate(iso) { var p = iso.split("-"); return p[2] + "." + p[1]; }
+  function fullDate(iso) { var p = iso.split("-"); return p[2] + "." + p[1] + "." + p[0]; }
+
+  function rangeShort(ev) {
+    return ev.start === ev.end ? shortDate(ev.start) : shortDate(ev.start) + "–" + shortDate(ev.end);
+  }
+  function rangeFull(ev) {
+    return ev.start === ev.end ? fullDate(ev.start) : fullDate(ev.start) + " – " + fullDate(ev.end);
+  }
+
+  function today0() {
+    var t = new Date();
+    return new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  }
+
+  function nowLabel() {
+    var d = new Date();
+    return pad2(d.getDate()) + "." + pad2(d.getMonth() + 1) + "." + d.getFullYear() +
+           " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+  }
+
+  function eventsWord(n) { return n === 1 ? "אירוע אחד" : n + " אירועים"; }
+
+  /* ============================================================
+     5. פענוח הגיליון (לוגיקה קיימת - נשמרה כפי שהיא)
+     ============================================================ */
+
+  function parseFlexibleDate(str) {
+    str = (str || "").trim();
+    if (!str) return null;
+
+    var m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if (m) return m[1] + "-" + pad2(+m[2]) + "-" + pad2(+m[3]);
+
+    m = str.match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})$/);
+    if (m) {
+      var day = pad2(parseInt(m[1], 10));
+      var month = pad2(parseInt(m[2], 10));
+      var year = m[3].length === 2 ? "20" + m[3] : m[3];
+      return year + "-" + month + "-" + day;
+    }
+
+    m = str.match(/^(\d{4})[.\/](\d{1,2})[.\/](\d{1,2})$/);
+    if (m) return m[1] + "-" + pad2(+m[2]) + "-" + pad2(+m[3]);
+
+    return null;
+  }
+
+  // מפרק CSV/TSV תוך כיבוד מרכאות (שורת ההנחיות בגיליון מכילה פסיקים בתוך מרכאות)
+  function splitRows(text, delim) {
+    var rows = [], row = [], field = "", inQuotes = false, i, ch;
+
+    for (i = 0; i < text.length; i++) {
+      ch = text.charAt(i);
+
+      if (inQuotes) {
+        if (ch === '"') {
+          if (text.charAt(i + 1) === '"') { field += '"'; i++; }
+          else { inQuotes = false; }
+        } else { field += ch; }
+        continue;
+      }
+
+      // מרכאות פותחות שדה רק בתחילתו. גרש בודד באמצע שם ("מבחני מפמ"ר")
+      // נחשב לתו רגיל, כדי ששורה אחת לא תבלע את שאר הקובץ.
+      if (ch === '"' && field === "") { inQuotes = true; }
+      else if (ch === delim) { row.push(field); field = ""; }
+      else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+      else if (ch === "\r") {
+        if (text.charAt(i + 1) !== "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+      }
+      else { field += ch; }
+    }
+    row.push(field);
+    rows.push(row);
+
+    return rows
+      .map(function (r) { return r.map(function (c) { return c.trim(); }); })
+      .filter(function (r) { return r.some(function (c) { return c.length > 0; }); });
+  }
+
+  function findColumn(headerCells, names) {
+    for (var i = 0; i < names.length; i++) {
+      var pos = headerCells.indexOf(names[i]);
+      if (pos > -1) return pos;
+    }
+    return -1;
+  }
+
+  function parseDelimited(text) {
+    text = (text || "").replace(/^﻿/, "");
+    if (!text.trim()) throw new Error("הגיליון התקבל ריק.");
+
+    var firstLine = text.split(/\r\n|\n|\r/)[0] || "";
+    var delim = firstLine.indexOf("\t") > -1 ? "\t" : ",";
+
+    var rows = splitRows(text, delim);
+    if (!rows.length) throw new Error("הגיליון התקבל ריק.");
+
+    // בגיליון יש שורת כותרת ושורת הנחיות מעל שורת העמודות האמיתית,
+    // ולכן מאתרים את שורת הכותרות לפי שמות העמודות ולא לפי מספר שורה קבוע.
+    var headerRowIndex = -1, idx = null;
+    for (var i = 0; i < rows.length; i++) {
+      var candidate = {
+        id:    findColumn(rows[i], HEADER_KEYS.id),
+        name:  findColumn(rows[i], HEADER_KEYS.name),
+        start: findColumn(rows[i], HEADER_KEYS.start),
+        end:   findColumn(rows[i], HEADER_KEYS.end),
+        cat:   findColumn(rows[i], HEADER_KEYS.cat),
+        notes: findColumn(rows[i], HEADER_KEYS.notes)
+      };
+      if (candidate.name > -1 && candidate.start > -1 && candidate.end > -1 && candidate.cat > -1) {
+        headerRowIndex = i;
+        idx = candidate;
+        break;
+      }
+    }
+    if (headerRowIndex === -1) {
+      throw new Error("כותרות העמודות לא זוהו בגיליון. נדרשות העמודות: שם האירוע, תאריך התחלה, תאריך סיום, תחום.");
+    }
+
+    var out = [], autoId = 0, skipped = 0;
+    for (var r = headerRowIndex + 1; r < rows.length; r++) {
+      var cols = rows[r];
+      var name = (cols[idx.name] || "").trim();
+      var start = parseFlexibleDate(cols[idx.start]);
+      var end = parseFlexibleDate(cols[idx.end]);
+
+      if (!name || !start || !end) { if (name) skipped++; continue; }
+      if (end < start) { var tmp = start; start = end; end = tmp; }
+
+      autoId++;
+      out.push({
+        id: (idx.id > -1 && cols[idx.id]) ? (parseInt(cols[idx.id], 10) || autoId) : autoId,
+        name: name,
+        category: (cols[idx.cat] || "ללא תחום").trim(),
+        start: start,
+        end: end,
+        notes: idx.notes > -1 ? (cols[idx.notes] || "") : ""
+      });
+    }
+
+    return { events: out, skipped: skipped };
+  }
+
+  /* ============================================================
+     6. סינון
+     ============================================================ */
+
+  function visibleEvents() {
+    var q = state.search.trim().toLowerCase();
+    return state.events.filter(function (ev) {
+      if (state.hidden[ev.category]) return false;
+      if (q && (ev.name + " " + ev.category).toLowerCase().indexOf(q) === -1) return false;
+      if (state.month !== "all") {
+        var mi = +state.month;
+        if (monthIndex(ev.end) < mi || monthIndex(ev.start) > mi) return false;
+      }
+      return true;
+    });
+  }
+
+  function filtersActive() {
+    if (state.search.trim()) return true;
+    if (state.month !== "all") return true;
+    for (var k in state.hidden) { if (state.hidden[k]) return true; }
+    return false;
+  }
+
+  function byStart(a, b) {
+    if (a.start !== b.start) return a.start < b.start ? -1 : 1;
+    return a.name.localeCompare(b.name, "he");
+  }
+
+  /* ============================================================
+     7. תצוגות הלוח
+     ============================================================ */
+
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+  function elem(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+
+  function currentMonthIndex() {
+    var t = today0();
+    if (t < YEAR_START || t > YEAR_END) return -1;
+    return (t.getFullYear() - 2026) * 12 + t.getMonth() - 8;
+  }
+
+  // מיקום "היום" באחוזים לאורך רצועה של 12 חודשים
+  function todayPercentYear() {
+    var mi = currentMonthIndex();
+    if (mi < 0) return -1;
+    var t = today0();
+    var frac = (t.getDate() - 1) / MONTHS[mi].days;
+    return ((mi + frac) / 12) * 100;
+  }
+
+  function makeEventCard(ev) {
+    var card = elem("button", "ev");
+    card.type = "button";
+    paint(card, ev.category);
+    card.appendChild(elem("span", "ev-name", ev.name));
+    var d = elem("span", "ev-date", rangeShort(ev));
+    d.setAttribute("dir", "ltr");
+    card.appendChild(d);
+    card.title = ev.name + " · " + rangeFull(ev) + " · " + ev.category;
+    card.setAttribute("aria-label", ev.name + ", " + rangeFull(ev) + ", " + ev.category);
+    card.addEventListener("click", function () { openDrawer(ev); });
+    return card;
+  }
+
+  function groupByCategory(evs) {
+    var map = {}, order = [];
+    state.categories.forEach(function (c) { map[c] = []; });
+    evs.forEach(function (ev) {
+      if (!map[ev.category]) { map[ev.category] = []; }
+      map[ev.category].push(ev);
+    });
+    state.categories.forEach(function (c) { if (map[c] && map[c].length) order.push(c); });
+    Object.keys(map).forEach(function (c) {
+      if (map[c].length && order.indexOf(c) === -1) order.push(c);
+    });
+    return { map: map, order: order };
+  }
+
+  function buildCategoryCell(cat, count) {
+    var cell = elem("div", "cat-cell");
+    paint(cell, cat);
+    cell.style.setProperty("--cat", catColor(cat).strong);
+    cell.style.setProperty("--cat-tint", catColor(cat).tint);
+
+    var nameLine = elem("div", "cat-name");
+    nameLine.appendChild(elem("span", "dot"));
+    nameLine.appendChild(elem("span", null, cat));
+    cell.appendChild(nameLine);
+    cell.appendChild(elem("div", "cat-count", eventsWord(count)));
+    return cell;
+  }
+
+  /* --- תצוגה שנתית / חודשית: אותה מכניקה, יחידת עמודה שונה --- */
+  function renderGrid(evs, opts) {
+    var inner = el.inner;
+    inner.style.setProperty("--cols", opts.cols);
+    inner.style.setProperty("--colmin", opts.colmin + "px");
+
+    // כותרת עמודות דביקה
+    var head = elem("div", "row head-row");
+    var headCat = elem("div", "head-cat", "תחום");
+    head.appendChild(headCat);
+    var headCols = elem("div", "head-cols");
+    opts.headers.forEach(function (h, i) {
+      var s = elem("span");
+      s.appendChild(document.createTextNode(h.label));
+      if (h.sub) s.appendChild(elem("small", null, h.sub));
+      if (i === opts.nowCol) s.className = "now";
+      headCols.appendChild(s);
+    });
+    head.appendChild(headCols);
+    inner.appendChild(head);
+
+    var grouped = groupByCategory(evs);
+
+    grouped.order.forEach(function (cat) {
+      var list = grouped.map[cat].slice().sort(byStart);
+      var row = elem("div", "row");
+      row.appendChild(buildCategoryCell(cat, list.length));
+
+      var track = elem("div", "track");
+
+      // קווי הפרדה בין העמודות + הדגשת החודש הנוכחי
+      var lines = elem("div", "gridlines");
+      for (var i = 1; i < opts.cols; i++) {
+        var v = elem("i");
+        v.style.right = (i / opts.cols * 100) + "%";
+        lines.appendChild(v);
+      }
+      if (opts.nowCol > -1) {
+        var band = elem("i", "month-now");
+        band.style.right = (opts.nowCol / opts.cols * 100) + "%";
+        band.style.width = (100 / opts.cols) + "%";
+        band.style.opacity = ".55";
+        lines.appendChild(band);
+      }
+      track.appendChild(lines);
+
+      if (opts.todayPct >= 0) {
+        var tl = elem("div", "today");
+        tl.style.right = opts.todayPct + "%";
+        track.appendChild(tl);
+      }
+
+      // ה-CSS Grid מסדר את הכרטיסים בשורות בלי חפיפה, לפי הטווח של כל אירוע
+      list.forEach(function (ev) {
+        var span = opts.place(ev);
+        var card = makeEventCard(ev);
+        card.style.gridColumn = (span.start + 1) + " / span " + span.len;
+        track.appendChild(card);
+      });
+
+      row.appendChild(track);
+      inner.appendChild(row);
+    });
+  }
+
+  function renderYear(evs) {
+    var nowCol = currentMonthIndex();
+    renderGrid(evs, {
+      cols: 12,
+      colmin: 100,
+      headers: MONTHS.map(function (m) { return { label: m.name }; }),
+      nowCol: nowCol,
+      todayPct: todayPercentYear(),
+      place: function (ev) {
+        var s = monthIndex(ev.start), e = monthIndex(ev.end);
+        return { start: s, len: Math.max(1, e - s + 1) };
+      }
+    });
+  }
+
+  function renderMonth(evs) {
+    var mi = state.month === "all" ? defaultMonth() : +state.month;
+    var m = MONTHS[mi];
+
+    // רק אירועים שנוגעים בחודש הנבחר
+    var inMonth = evs.filter(function (ev) {
+      return monthIndex(ev.end) >= mi && monthIndex(ev.start) <= mi;
+    });
+
+    var heads = [];
+    for (var d = 1; d <= m.days; d++) {
+      var wd = new Date(m.y, m.m, d).getDay();
+      heads.push({ label: String(d), sub: WEEKDAYS[wd] });
+    }
+
+    var t = today0();
+    var isNowMonth = (t.getFullYear() === m.y && t.getMonth() === m.m);
+
+    renderGrid(inMonth, {
+      cols: m.days,
+      colmin: 40,
+      headers: heads,
+      nowCol: isNowMonth ? t.getDate() - 1 : -1,
+      todayPct: isNowMonth ? ((t.getDate() - 1) / m.days) * 100 : -1,
+      place: function (ev) {
+        var sd = toDate(ev.start), ed = toDate(ev.end);
+        var s = (sd.getFullYear() === m.y && sd.getMonth() === m.m) ? sd.getDate() - 1 : 0;
+        var e = (ed.getFullYear() === m.y && ed.getMonth() === m.m) ? ed.getDate() - 1 : m.days - 1;
+        return { start: s, len: Math.max(1, e - s + 1) };
+      }
+    });
+
+    return inMonth.length;
+  }
+
+  function defaultMonth() {
+    var now = currentMonthIndex();
+    if (now > -1) return now;
+    var first = state.events.slice().sort(byStart)[0];
+    return first ? monthIndex(first.start) : 0;
+  }
+
+  function renderList(evs) {
+    var wrap = elem("div", "list-wrap");
+
+    var head = elem("div", "list-head");
+    head.appendChild(elem("span", null, "תאריך"));
+    head.appendChild(elem("span", null, "אירוע"));
+    head.appendChild(elem("span", null, "תחום"));
+    wrap.appendChild(head);
+
+    evs.slice().sort(byStart).forEach(function (ev) {
+      var row = elem("button", "lrow");
+      row.type = "button";
+      paint(row, ev.category);
+
+      var date = elem("div", "lrow-date", rangeFull(ev));
+      date.setAttribute("dir", "ltr");
+      row.appendChild(date);
+
+      var name = elem("div", "lrow-name");
+      name.appendChild(elem("span", "dot"));
+      name.appendChild(elem("span", null, ev.name));
+      row.appendChild(name);
+
+      var tag = elem("span", "tag");
+      tag.appendChild(elem("span", "dot"));
+      tag.appendChild(document.createTextNode(ev.category));
+      row.appendChild(tag);
+
+      row.addEventListener("click", function () { openDrawer(ev); });
+      wrap.appendChild(row);
+    });
+
+    el.inner.appendChild(wrap);
+  }
+
+  // מובייל: כרטיסים מקובצים לפי חודש, בלי גלילה אופקית
+  function renderMobile(evs) {
+    var byMonth = {};
+    evs.forEach(function (ev) {
+      var mi = monthIndex(ev.start);
+      (byMonth[mi] = byMonth[mi] || []).push(ev);
+    });
+
+    Object.keys(byMonth).sort(function (a, b) { return a - b; }).forEach(function (mi) {
+      var list = byMonth[mi].slice().sort(byStart);
+      var g = elem("div", "mgroup");
+
+      var h = elem("div", "mgroup-h");
+      h.appendChild(document.createTextNode(MONTHS[mi].name));
+      h.appendChild(elem("span", null, eventsWord(list.length)));
+      g.appendChild(h);
+
+      var cards = elem("div", "mcards");
+      list.forEach(function (ev) {
+        var card = elem("button", "mcard");
+        card.type = "button";
+        paint(card, ev.category);
+
+        var top = elem("div", "mcard-top");
+        top.appendChild(elem("span", "mcard-name", ev.name));
+        var d = elem("span", "mcard-date", rangeShort(ev));
+        d.setAttribute("dir", "ltr");
+        top.appendChild(d);
+        card.appendChild(top);
+
+        var tag = elem("span", "tag");
+        tag.appendChild(elem("span", "dot"));
+        tag.appendChild(document.createTextNode(ev.category));
+        card.appendChild(tag);
+
+        card.addEventListener("click", function () { openDrawer(ev); });
+        cards.appendChild(card);
+      });
+
+      g.appendChild(cards);
+      el.inner.appendChild(g);
+    });
+  }
+
+  function renderEmpty() {
+    var box = elem("div", "empty");
+    box.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+      'stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"></rect>' +
+      '<path d="M3 9h18M8 2v4M16 2v4"></path></svg>';
+    box.appendChild(elem("p", null, "לא נמצאו אירועים עבור הסינון שנבחר."));
+    var btn = elem("button", "btn", "איפוס סינון");
+    btn.type = "button";
+    btn.addEventListener("click", resetFilters);
+    box.appendChild(btn);
+    el.inner.appendChild(box);
+  }
+
+  /* ============================================================
+     8. ציור מחדש (רק החלקים שהשתנו)
+     ============================================================ */
+
+  function renderBoard() {
+    if (state.loadError) return;
+
+    clear(el.inner);
+    el.inner.style.removeProperty("--cols");
+    el.inner.style.removeProperty("--colmin");
+    var isGridView = !state.mobile && (state.view === "year" || state.view === "month");
+    el.inner.classList.toggle("is-grid", isGridView);
+
+    var evs = visibleEvents();
+    var shown = evs.length;
+
+    if (!state.events.length) {
+      el.inner.appendChild(elem("div", "empty")).appendChild(elem("p", null, "טוען נתונים…"));
+      return;
+    }
+
+    if (state.mobile) {
+      el.boardTitle.textContent = "אירועים לפי חודש";
+      if (!shown) { renderEmpty(); } else { renderMobile(evs); }
+    } else if (state.view === "list") {
+      el.boardTitle.textContent = "רשימת אירועים";
+      if (!shown) { renderEmpty(); } else { renderList(evs); }
+    } else if (state.view === "month") {
+      var mi = state.month === "all" ? defaultMonth() : +state.month;
+      el.boardTitle.textContent = "תצוגה חודשית · " + MONTHS[mi].name;
+      var n = shown ? renderMonth(evs) : 0;
+      if (!n) { clear(el.inner); renderEmpty(); }
+    } else {
+      el.boardTitle.textContent = "תכנית שנתית";
+      if (!shown) { renderEmpty(); } else { renderYear(evs); }
+    }
+
+    el.boardMeta.textContent = filtersActive()
+      ? "מוצגים " + shown + " מתוך " + state.events.length + " אירועים"
+      : eventsWord(state.events.length);
+  }
+
+  function renderMetrics() {
+    var evs = visibleEvents();
+    var t = today0();
+
+    var cats = {};
+    evs.forEach(function (e) { cats[e.category] = 1; });
+
+    var thisMonthStart = new Date(t.getFullYear(), t.getMonth(), 1);
+    var thisMonthEnd = new Date(t.getFullYear(), t.getMonth() + 1, 0);
+    var inMonth = evs.filter(function (e) {
+      return toDate(e.end) >= thisMonthStart && toDate(e.start) <= thisMonthEnd;
+    }).length;
+
+    var upcoming = evs.filter(function (e) { return toDate(e.end) >= t; }).length;
+
+    var cards = [
+      { n: evs.length, l: "סה״כ אירועים", i: "calendar" },
+      { n: Object.keys(cats).length, l: "תחומים פעילים", i: "layers" },
+      { n: inMonth, l: "אירועים החודש", i: "clock" },
+      { n: upcoming, l: "אירועים קרובים", i: "flag" }
+    ];
+
+    var icons = {
+      calendar: '<rect x="3" y="4" width="18" height="17" rx="2"></rect><path d="M3 9h18M8 2v4M16 2v4"></path>',
+      layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 13 9 5 9-5"></path>',
+      clock: '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>',
+      flag: '<path d="M4 21V4h9l1 2h6v9h-7l-1-2H4"></path>'
+    };
+
+    clear(el.metrics);
+    cards.forEach(function (c) {
+      var card = elem("div", "metric");
+      var ic = elem("div", "metric-ic");
+      ic.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+                     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + icons[c.i] + '</svg>';
+      card.appendChild(ic);
+      var body = elem("div");
+      body.appendChild(elem("div", "metric-num", String(c.n)));
+      body.appendChild(elem("div", "metric-lbl", c.l));
+      card.appendChild(body);
+      el.metrics.appendChild(card);
+    });
+  }
+
+  function renderChips() {
+    clear(el.chips);
+
+    var counts = {};
+    state.events.forEach(function (e) { counts[e.category] = (counts[e.category] || 0) + 1; });
+
+    // רק תחומים שיש להם אירועים בפועל - כדי לא למלא את הסרגל בשבבים ריקים
+    var present = state.categories.filter(function (c) { return counts[c]; });
+
+    present.forEach(function (cat) {
+      var c = catColor(cat);
+      var b = elem("button", "chip");
+      b.type = "button";
+      b.style.background = c.chip;
+      b.style.color = c.text;
+      b.setAttribute("aria-pressed", state.hidden[cat] ? "false" : "true");
+
+      var dot = elem("span", "dot");
+      dot.style.background = c.strong;
+      b.appendChild(dot);
+      b.appendChild(document.createTextNode(cat));
+      b.appendChild(elem("span", "n", String(counts[cat] || 0)));
+
+      b.addEventListener("click", function () {
+        state.hidden[cat] = !state.hidden[cat];
+        b.setAttribute("aria-pressed", state.hidden[cat] ? "false" : "true");
+        refreshViews();
+      });
+
+      el.chips.appendChild(b);
+    });
+
+    el.chips.appendChild(elem("span", "chips-hint", "לחיצה על תחום מסתירה או מציגה אותו"));
+  }
+
+  function renderUpcoming() {
+    var t = today0();
+    var next = state.events
+      .filter(function (e) { return toDate(e.end) >= t; })
+      .sort(byStart)
+      .slice(0, 5);
+
+    if (!next.length) { el.upcoming.hidden = true; return; }
+    el.upcoming.hidden = false;
+
+    clear(el.upGrid);
+    next.forEach(function (ev) {
+      var card = elem("button", "up-card");
+      card.type = "button";
+      paint(card, ev.category);
+
+      var when = elem("div", "up-when", rangeFull(ev));
+      when.setAttribute("dir", "ltr");
+      card.appendChild(when);
+      card.appendChild(elem("div", "up-name", ev.name));
+
+      var tag = elem("span", "tag");
+      tag.appendChild(elem("span", "dot"));
+      tag.appendChild(document.createTextNode(ev.category));
+      card.appendChild(tag);
+
+      card.addEventListener("click", function () { openDrawer(ev); });
+      el.upGrid.appendChild(card);
+    });
+  }
+
+  // סינון מצייר מחדש רק את הלוח, המדדים והאירועים הקרובים
+  function refreshViews() {
+    renderBoard();
+    renderMetrics();
+  }
+
+  /* ============================================================
+     9. מגירת פרטי אירוע
+     ============================================================ */
+
+  var lastFocus = null;
+
+  function field(label, value, ltr) {
+    var d = elem("div", "dfield");
+    var dl = elem("dl");
+    dl.style.margin = "0";
+    dl.appendChild(elem("dt", null, label));
+    var dd = elem("dd", null, value);
+    if (ltr) dd.setAttribute("dir", "ltr");
+    dl.appendChild(dd);
+    d.appendChild(dl);
+    return d;
+  }
+
+  function openDrawer(ev) {
+    lastFocus = document.activeElement;
+    el.drawerTitle.textContent = ev.name;
+
+    clear(el.drawerBody);
+
+    var tag = elem("span", "tag");
+    paint(tag, ev.category);
+    tag.style.background = catColor(ev.category).chip;
+    tag.style.color = catColor(ev.category).text;
+    tag.appendChild(elem("span", "dot"));
+    tag.appendChild(document.createTextNode(ev.category));
+    var tagWrap = elem("div");
+    tagWrap.appendChild(tag);
+    el.drawerBody.appendChild(tagWrap);
+
+    el.drawerBody.appendChild(field("תאריך התחלה", fullDate(ev.start), true));
+    el.drawerBody.appendChild(field("תאריך סיום", fullDate(ev.end), true));
+    el.drawerBody.appendChild(field("תצוגת תאריך", rangeShort(ev), true));
+
+    var days = Math.round((toDate(ev.end) - toDate(ev.start)) / MS_DAY) + 1;
+    el.drawerBody.appendChild(field("משך", days === 1 ? "יום אחד" : days + " ימים"));
+    el.drawerBody.appendChild(field("תחום", ev.category));
+
+    if (ev.notes) el.drawerBody.appendChild(field("הערות", ev.notes));
+
+    el.drawer.hidden = false;
+    // מאפשר למעבר להיראות
+    requestAnimationFrame(function () {
+      el.drawer.classList.add("open");
+      el.backdrop.classList.add("open");
+      el.drawerClose.focus();
+    });
+  }
+
+  function closeDrawer() {
+    el.drawer.classList.remove("open");
+    el.backdrop.classList.remove("open");
+    setTimeout(function () { el.drawer.hidden = true; }, 220);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  /* ============================================================
+     10. טעינת נתונים (לוגיקה קיימת - נשמרה כפי שהיא)
+     ============================================================ */
+
+  function setStatus(text, kind) {
+    el.status.className = "status" + (kind ? " " + kind : "");
+    clear(el.status);
+    if (!text) return;
+    if (kind === "err") el.status.appendChild(elem("b", null, "לא הצלחנו לטעון את הנתונים מהגיליון"));
+    el.status.appendChild(document.createTextNode(text));
+  }
+
+  function syncCategories() {
+    var known = Object.keys(CATEGORY_HUES);
+    var seen = {}, extras = [];
+    state.events.forEach(function (e) {
+      if (known.indexOf(e.category) === -1 && !seen[e.category]) {
+        seen[e.category] = 1;
+        extras.push(e.category);
+      }
+    });
+    state.categories = known.concat(extras);
+  }
+
+  function busy(on) {
+    el.refreshBtn.disabled = on;
+    el.refreshBtn.classList.toggle("busy", on);
+  }
+
+  function loadData(isManual) {
+    busy(true);
+    state.loadError = false;
+    setStatus("מושכים נתונים מהגיליון…", "");
+
+    var url = SHEET_URL + (SHEET_URL.indexOf("?") > -1 ? "&" : "?") + "_ts=" + Date.now();
+
+    // עצירה אחרי 20 שניות, כדי שהלוח לא ייתקע על "מושכים נתונים…" ללא סוף
+    var opts = { cache: "no-store" };
+    var timer = null;
+    if (typeof AbortController === "function") {
+      var ctrl = new AbortController();
+      opts.signal = ctrl.signal;
+      timer = setTimeout(function () { ctrl.abort(); }, 20000);
+    }
+
+    fetch(url, opts)
+      .then(function (res) {
+        if (!res.ok) throw new Error("השרת החזיר תשובה " + res.status + ".");
+        return res.text();
+      })
+      .then(function (text) {
+        var parsed = parseDelimited(text);
+        if (!parsed.events.length) {
+          throw new Error("לא נמצאו שורות אירוע תקינות בגיליון. ודאו שיש תאריכי התחלה וסיום בכל שורה.");
+        }
+
+        state.events = parsed.events;
+        syncCategories();
+        renderChips();
+        refreshViews();
+        renderUpcoming();
+
+        var stamp = nowLabel();
+        clear(el.stamp);
+        el.stamp.appendChild(elem("b", null, stamp));
+        el.stamp.appendChild(document.createTextNode("עודכן לאחרונה"));
+
+        if (parsed.skipped) {
+          setStatus(parsed.skipped + " שורות בגיליון דולגו בשל תאריך חסר או לא תקין.", "ok");
+        } else {
+          setStatus("", "");
+        }
+      })
+      .catch(function (err) {
+        state.loadError = true;
+
+        var detail = (err && err.message) ? err.message : "שגיאה לא ידועה.";
+        var isAbort = err && (err.name === "AbortError");
+        var isNetwork = (err instanceof TypeError) ||
+                        /failed to fetch|networkerror|load failed/i.test(detail);
+        var isLocalFile = location.protocol !== "http:" && location.protocol !== "https:";
+
+        var text;
+        if (isAbort) {
+          text = "הבקשה לגיליון ארכה יותר מ-20 שניות והופסקה. ייתכן שהחיבור לאינטרנט איטי כרגע.";
+        } else if (isNetwork && isLocalFile) {
+          // גוגל אינה מחזירה הרשאת CORS לדף שנפתח ישירות מהדיסק (מקור "null"),
+          // ולכן במצב זה הדפדפן חוסם את משיכת הנתונים.
+          text = "הדף נפתח ישירות מהמחשב (file://), ובמצב הזה הדפדפן חוסם את משיכת הנתונים מגוגל. " +
+                 "כדי לראות את הנתונים החיים, הפעילו את הקובץ \"start-board.cmd\" שנמצא באותה תיקייה - " +
+                 "הוא פותח את אותו לוח בדיוק בכתובת מקומית שגוגל מאשרת. לחלופין אפשר להעלות את הקובץ לאתר של בית הספר.";
+        } else if (isNetwork) {
+          text = "לא הצלחנו להגיע לגיליון. בדקו חיבור לאינטרנט, וודאו שהגיליון עדיין מפורסם לאינטרנט (קובץ ← שיתוף ← פרסום באינטרנט ← CSV).";
+        } else {
+          text = detail;
+        }
+
+        setStatus(text + " אפשר ללחוץ על \"רענון נתונים\" כדי לנסות שוב.", "err");
+
+        clear(el.inner);
+        var box = elem("div", "empty");
+        box.appendChild(elem("p", null, "הלוח לא נטען - אין כרגע נתונים להצגה."));
+        el.inner.appendChild(box);
+        el.upcoming.hidden = true;
+        if (!isManual) clear(el.stamp);
+      })
+      .then(function () {
+        if (timer) clearTimeout(timer);
+        busy(false);
+      });
+  }
+
+  /* ============================================================
+     11. אתחול ואירועי ממשק
+     ============================================================ */
+
+  function setView(v) {
+    state.view = v;
+    var btns = document.querySelectorAll(".segmented button");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute("aria-pressed", btns[i].getAttribute("data-view") === v ? "true" : "false");
+    }
+    if (v === "month" && state.month === "all") {
+      // נבחר אוטומטית עבור התצוגה החודשית בלבד - לא נשאר כסינון אחריה
+      state.month = String(defaultMonth());
+      state.monthAuto = true;
+      el.monthSel.value = state.month;
+    } else if (v !== "month" && state.monthAuto) {
+      state.month = "all";
+      state.monthAuto = false;
+      el.monthSel.value = "all";
+    }
+    refreshViews();
+  }
+
+  function resetFilters() {
+    state.search = "";
+    state.month = "all";
+    state.monthAuto = false;
+    state.hidden = {};
+    el.search.value = "";
+    el.monthSel.value = "all";
+    renderChips();
+    refreshViews();
+  }
+
+  function fillMonthSelect() {
+    var all = elem("option", null, "כל השנה");
+    all.value = "all";
+    el.monthSel.appendChild(all);
+    MONTHS.forEach(function (m, i) {
+      var o = elem("option", null, m.name);
+      o.value = String(i);
+      el.monthSel.appendChild(o);
+    });
+  }
+
+  function syncMobile() {
+    var m = window.matchMedia("(max-width: 767px)").matches;
+    if (m !== state.mobile) {
+      state.mobile = m;
+      renderBoard();
+    }
+  }
+
+  fillMonthSelect();
+  state.mobile = window.matchMedia("(max-width: 767px)").matches;
+
+  var searchTimer = null;
+  el.search.addEventListener("input", function () {
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(function () {
+      state.search = el.search.value;
+      refreshViews();
+    }, 160);
+  });
+
+  el.monthSel.addEventListener("change", function () {
+    state.month = el.monthSel.value;
+    state.monthAuto = false;          // בחירה ידנית - נשמרת בין התצוגות
+    refreshViews();
+  });
+
+  el.resetBtn.addEventListener("click", resetFilters);
+  el.refreshBtn.addEventListener("click", function () { loadData(true); });
+  el.printBtn.addEventListener("click", function () { window.print(); });
+
+  document.querySelector(".segmented").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-view]");
+    if (b) setView(b.getAttribute("data-view"));
+  });
+
+  el.backdrop.addEventListener("click", closeDrawer);
+  el.drawerClose.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !el.drawer.hidden) closeDrawer();
+  });
+
+  var resizeTimer = null;
+  window.addEventListener("resize", function () {
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(syncMobile, 150);
+  });
+
+  loadData(false);
+})();
+</script>
+</body>
+</html>
