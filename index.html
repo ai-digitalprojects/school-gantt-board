@@ -195,14 +195,13 @@ select{
 }
 .chip{
   display:inline-flex;align-items:center;gap:7px;
-  border:1px solid transparent;background:var(--sunken);color:var(--ink-2);
-  padding:5px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;font-weight:500;
+  border:1px solid transparent;background:var(--c);color:var(--on);
+  padding:5px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;font-weight:600;
   transition:opacity .12s ease,box-shadow .12s ease;
 }
-.chip .dot{width:8px;height:8px;border-radius:50%;flex:none;}
-.chip .n{font-size:11.5px;opacity:.7;font-variant-numeric:tabular-nums;}
-.chip[aria-pressed="false"]{opacity:.42;background:var(--sunken);color:var(--muted);}
-.chip[aria-pressed="false"] .dot{background:var(--line-2) !important;}
+.chip .dot{width:8px;height:8px;border-radius:50%;flex:none;background:rgba(255,255,255,.85);}
+.chip .n{font-size:11.5px;font-weight:400;font-variant-numeric:tabular-nums;}
+.chip[aria-pressed="false"]{opacity:.34;}
 .chips-hint{font-size:12px;color:var(--muted);align-self:center;}
 
 /* ============================================================
@@ -250,14 +249,11 @@ select{
   position:sticky;right:0;z-index:2;
   padding:var(--s3) var(--s4);border-left:1px solid var(--line-2);
   display:flex;flex-direction:column;justify-content:center;gap:2px;
-  background:var(--cat-tint,var(--sunken));
+  background:var(--c,var(--sunken));color:var(--on,var(--ink));
 }
-.cat-cell::before{
-  content:"";position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--cat,var(--line-2));
-}
-.cat-name{display:flex;align-items:center;gap:7px;font-weight:600;font-size:13px;line-height:1.3;}
-.cat-name .dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--cat);}
-.cat-count{font-size:11.5px;color:var(--muted);padding-right:16px;}
+.cat-name{display:flex;align-items:center;gap:7px;font-weight:700;font-size:13px;line-height:1.3;}
+.cat-name .dot{width:9px;height:9px;border-radius:50%;flex:none;background:rgba(255,255,255,.9);}
+.cat-count{font-size:11.5px;font-weight:400;color:var(--on);padding-right:16px;}
 
 .track{
   position:relative;
@@ -282,7 +278,7 @@ select{
   position:relative;z-index:1;
   display:flex;flex-direction:column;align-items:flex-start;gap:1px;
   text-align:right;min-width:0;overflow:hidden;
-  background:var(--tint);border:1px solid var(--edge);border-right:3px solid var(--c);
+  background:var(--c);border:none;color:var(--on);
   border-radius:var(--r-sm);padding:6px 10px;cursor:pointer;
   min-height:46px;justify-content:center;
   box-shadow:var(--sh-1);
@@ -290,13 +286,13 @@ select{
 }
 .ev:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
 .ev-name{
-  font-weight:600;font-size:12.5px;color:var(--tx);line-height:1.3;
+  font-weight:600;font-size:12.5px;color:var(--on);line-height:1.3;
   max-width:100%;overflow:hidden;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
   overflow-wrap:anywhere;
 }
 .ev-date{
-  font-size:11px;font-weight:500;color:var(--tx);opacity:.72;
+  font-size:11px;font-weight:500;color:var(--on);
   font-variant-numeric:tabular-nums;unicode-bidi:isolate;
 }
 
@@ -318,10 +314,10 @@ select{
 .lrow-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tag{
   display:inline-flex;align-items:center;gap:6px;justify-self:start;
-  background:var(--chip);color:var(--tx);font-size:11.5px;font-weight:600;
+  background:var(--c);color:var(--on);font-size:11.5px;font-weight:600;
   padding:3px 10px;border-radius:999px;
 }
-.tag .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none;}
+.tag .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.85);flex:none;}
 .list-head{
   display:grid;grid-template-columns:150px minmax(0,1fr) 190px;gap:var(--s3);
   padding:9px var(--s4);font-size:12px;font-weight:600;color:var(--muted);
@@ -343,12 +339,14 @@ select{
 .mcards{padding:var(--s3) var(--s4);display:flex;flex-direction:column;gap:var(--s2);}
 .mcard{
   display:flex;flex-direction:column;gap:3px;width:100%;text-align:right;
-  background:var(--tint);border:1px solid var(--edge);border-right:3px solid var(--c);
+  background:var(--c);border:none;color:var(--on);
   border-radius:var(--r-sm);padding:10px 12px;cursor:pointer;
 }
 .mcard-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);}
-.mcard-name{font-weight:600;font-size:14px;color:var(--tx);}
-.mcard-date{font-size:12px;color:var(--tx);opacity:.75;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.mcard-name{font-weight:700;font-size:14px;color:var(--on);}
+.mcard-date{font-size:12px;color:var(--on);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.mcard .tag{background:rgba(0,0,0,.24);color:var(--on);align-self:flex-start;}
+.mcard .tag .dot{background:rgba(255,255,255,.9);}
 
 /* ============================================================
    מצב ריק
@@ -366,7 +364,7 @@ select{
 .sec-h span{font-size:12.5px;color:var(--muted);}
 .up-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);}
 .up-card{
-  background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--c);
+  background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);
   border-radius:var(--r);padding:var(--s3);text-align:right;cursor:pointer;
   display:flex;flex-direction:column;gap:6px;box-shadow:var(--sh-1);
   transition:transform .12s ease,box-shadow .12s ease;
@@ -606,57 +604,42 @@ select{
      2. מערכת הצבעים - גוון קבוע לכל תחום, בכל מקום בממשק
      ============================================================ */
 
-  // [גוון, רוויה] - לכל תחום גוון נפרד ורווי, כך שכל אחד מזוהה במבט אחד.
-  // הגוונים פרושים סביב גלגל הצבעים ולא מרוכזים בטווח אחד.
-  var CATEGORY_HUES = {
-    "ישיבות פדגוגיות":    [243, 62],  // אינדיגו
-    "מבחנים והערכה":      [208, 80],  // כחול
-    "ימי הורים":          [174, 72],  // טורקיז
-    "מצוינות":            [145, 62],  // ירוק
-    "הנהגת הורים":        [42,  85],  // חרדל־זהב
-    "חגים ומועדים":       [278, 52],  // סגול
-    "אירועים בית־ספריים": [24,  82],  // כתום
-    "משימות הנהלה":       [348, 62],  // ורוד־אדמדם
-    "ימי זיכרון":         [216, 22]   // כחול־אפור מאופק
+  // צבע מלא ורווי לכל תחום. ארבעה גוונים הוכהו לגוון כהה יותר מאותה משפחה
+  // כדי לעמוד בניגודיות AA מול טקסט לבן (היחס מצוין ליד כל אחד).
+  var CATEGORY_COLORS = {
+    "ישיבות פדגוגיות":    "#4F46E5",  // אינדיגו · 6.29
+    "מבחנים והערכה":      "#B45309",  // ענבר · 5.02 (במקום D97706 שנתן 3.19)
+    "ימי הורים":          "#0F766E",  // טורקיז · 5.47 (במקום 0D9488 שנתן 3.74)
+    "מצוינות":            "#0369A1",  // תכלת · 5.93 (במקום 0284C7 שנתן 4.10)
+    "הנהגת הורים":        "#E11D48",  // ורוד · 4.70
+    "חגים ומועדים":       "#7C3AED",  // סגול · 5.70
+    "אירועים בית־ספריים": "#15803D",  // ירוק · 5.02 (במקום 16A34A שנתן 3.30)
+    "משימות הנהלה":       "#475569",  // סלייט · 7.58
+    "ימי זיכרון":         "#1F2937"   // פחם · 14.68
   };
 
   var colorCache = {};
 
-  // תחום שאינו ברשימה מקבל גוון קריר יציב, נגזר משמו
+  // תחום שאינו ברשימה מקבל צבע מלא יציב, נגזר משמו. הבהירות נמוכה (32%)
+  // כדי שטקסט לבן יישאר קריא עליו.
   function hueFromName(name) {
     var h = 0;
     for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 100000;
-    return 140 + (h % 145);   // 140-285: ירוק, טורקיז, כחול, סגול
+    return h % 360;
   }
 
   function catColor(name) {
     if (colorCache[name]) return colorCache[name];
-
-    var spec = CATEGORY_HUES[name] || [hueFromName(name), 68];
-    var h = spec[0], s = spec[1];
-
-    // גוונים חמים (זהב/כתום) נראים בהירים מדי בבהירות זהה, ולכן מוכהים מעט
-    var warm = (h < 65 || h > 330);
-    var strongL = warm ? 38 : 43;
-
-    var c = {
-      strong: "hsl(" + h + "," + s + "%," + strongL + "%)",
-      tint:   "hsl(" + h + "," + Math.min(s, 78) + "%,95%)",
-      chip:   "hsl(" + h + "," + Math.min(s, 74) + "%,87%)",
-      edge:   "hsl(" + h + "," + Math.min(s, 66) + "%,80%)",
-      text:   "hsl(" + h + "," + Math.min(s, 70) + "%," + (warm ? 24 : 26) + "%)"
-    };
-    colorCache[name] = c;
-    return c;
+    var solid = CATEGORY_COLORS[name] || ("hsl(" + hueFromName(name) + ",55%,32%)");
+    colorCache[name] = { solid: solid, on: "#FFFFFF" };
+    return colorCache[name];
   }
 
+  // אותו צבע מלא בדיוק בכל מקום שבו התחום מופיע
   function paint(el, name) {
     var c = catColor(name);
-    el.style.setProperty("--c", c.strong);
-    el.style.setProperty("--tint", c.tint);
-    el.style.setProperty("--chip", c.chip);
-    el.style.setProperty("--edge", c.edge);
-    el.style.setProperty("--tx", c.text);
+    el.style.setProperty("--c", c.solid);
+    el.style.setProperty("--on", c.on);
   }
 
   /* ============================================================
@@ -958,8 +941,6 @@ select{
   function buildCategoryCell(cat, count) {
     var cell = elem("div", "cat-cell");
     paint(cell, cat);
-    cell.style.setProperty("--cat", catColor(cat).strong);
-    cell.style.setProperty("--cat-tint", catColor(cat).tint);
 
     var nameLine = elem("div", "cat-name");
     nameLine.appendChild(elem("span", "dot"));
@@ -1280,16 +1261,11 @@ select{
     var present = state.categories.filter(function (c) { return counts[c]; });
 
     present.forEach(function (cat) {
-      var c = catColor(cat);
       var b = elem("button", "chip");
       b.type = "button";
-      b.style.background = c.chip;
-      b.style.color = c.text;
+      paint(b, cat);
       b.setAttribute("aria-pressed", state.hidden[cat] ? "false" : "true");
-
-      var dot = elem("span", "dot");
-      dot.style.background = c.strong;
-      b.appendChild(dot);
+      b.appendChild(elem("span", "dot"));
       b.appendChild(document.createTextNode(cat));
       b.appendChild(elem("span", "n", String(counts[cat] || 0)));
 
@@ -1368,8 +1344,6 @@ select{
 
     var tag = elem("span", "tag");
     paint(tag, ev.category);
-    tag.style.background = catColor(ev.category).chip;
-    tag.style.color = catColor(ev.category).text;
     tag.appendChild(elem("span", "dot"));
     tag.appendChild(document.createTextNode(ev.category));
     var tagWrap = elem("div");
@@ -1415,7 +1389,7 @@ select{
   }
 
   function syncCategories() {
-    var known = Object.keys(CATEGORY_HUES);
+    var known = Object.keys(CATEGORY_COLORS);
     var seen = {}, extras = [];
     state.events.forEach(function (e) {
       if (known.indexOf(e.category) === -1 && !seen[e.category]) {
