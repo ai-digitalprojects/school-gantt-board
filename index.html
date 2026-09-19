@@ -209,7 +209,7 @@ select{
 .chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .chip{
   display:inline-flex;align-items:center;gap:9px;
-  border:2px solid transparent;background:var(--c);color:#fff;
+  border:2px solid var(--c);background:var(--tint);color:var(--strong);
   padding:10px 20px;border-radius:999px;cursor:pointer;
   font-size:clamp(15.5px,1.2vw,20px);font-weight:700;
   transition:background .12s ease,border-color .12s ease,box-shadow .12s ease,transform .12s ease;
@@ -218,8 +218,8 @@ select{
 
 /* תחום נבחר - מילוי מלא בצבע התחום */
 .chip[aria-pressed="true"]{
-  border-color:#fff;
-  box-shadow:0 0 0 3px var(--c),0 6px 18px rgba(21,32,43,.42);
+  background:var(--c);border-color:var(--c);color:#fff;
+  box-shadow:0 0 0 4px var(--tint),0 5px 16px rgba(21,32,43,.3);
   transform:translateY(-1px);
 }
 /* וי הבחירה מופיע רק כשהתחום נבחר */
@@ -227,10 +227,11 @@ select{
   display:none;font-size:1.05em;font-weight:900;line-height:1;margin-inline-end:-2px;
 }
 .chip[aria-pressed="true"] .check{display:inline-block;}
-.chip[aria-pressed="true"] .n{background:rgba(0,0,0,.34);}
-.chip .dot{width:11px;height:11px;border-radius:50%;flex:none;background:rgba(255,255,255,.92);}
+.chip[aria-pressed="true"] .n{background:rgba(0,0,0,.28);color:#fff;}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none;background:var(--c);}
+.chip[aria-pressed="true"] .dot{background:#fff;}
 .chip .n{
-  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:rgba(0,0,0,.3);color:#fff;
+  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:rgba(255,255,255,.7);color:var(--strong);
   padding:2px 9px;border-radius:999px;font-variant-numeric:tabular-nums;
 }
 
@@ -294,27 +295,35 @@ select{
   content:"החודש הנוכחי";display:block;margin-top:4px;
   font-size:clamp(10.5px,0.78vw,14px);font-weight:700;letter-spacing:.04em;color:var(--gold);
 }
-.pcol-body{padding:10px;display:flex;flex-direction:column;gap:11px;}
+.pcol-body{padding:12px;display:flex;flex-direction:column;gap:14px;}
 .pcol-empty{padding:var(--s4) var(--s2);text-align:center;color:var(--muted);font-size:clamp(12.5px,0.9vw,16px);}
 
 /* כרטיס אירוע - רקע פסטל ופס צבע בצד */
 .pcard{
-  position:relative;display:flex;flex-direction:column;gap:3px;
+  position:relative;display:flex;flex-direction:column;gap:7px;
   width:100%;text-align:right;cursor:pointer;
-  background:var(--c);border:none;color:#fff;
-  border-right:6px solid var(--bar);
-  border-radius:var(--r-sm);padding:9px 11px;
+  background:var(--tint);color:var(--ink);
+  border:1px solid rgba(21,32,43,.09);
+  border-right:8px solid var(--c);
+  border-radius:10px;padding:14px 16px;
+  box-shadow:0 1px 3px rgba(21,32,43,.06);
   transition:transform .12s ease,box-shadow .12s ease;
 }
-.pcard:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
+.pcard:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(21,32,43,.12);}
 .pcard-top{display:flex;align-items:center;gap:7px;}
 .pcard-date{
-  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:#fff;
+  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:var(--strong);
   font-variant-numeric:tabular-nums;unicode-bidi:isolate;white-space:nowrap;
 }
-.pcard-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.92);flex:none;}
-.pcard-name{font-size:clamp(16px,1.3vw,21px);font-weight:700;color:#fff;line-height:1.42;overflow-wrap:anywhere;}
-.pcard-cat{font-size:clamp(13px,0.95vw,17px);font-weight:500;color:#fff;}
+.pcard-dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none;}
+.pcard-name{
+  font-size:clamp(16px,1.3vw,21px);font-weight:700;color:var(--ink);
+  line-height:1.55;overflow-wrap:break-word;word-break:normal;hyphens:auto;
+}
+.pcard-cat{
+  font-size:clamp(13px,0.95vw,17px);font-weight:600;color:var(--deep);
+  padding-top:2px;border-top:1px solid rgba(21,32,43,.07);
+}
 
 /* ============================================================
    תצוגה חודשית
@@ -328,7 +337,7 @@ select{
 .mv-head h3{margin:0;font-size:clamp(20px,1.7vw,32px);font-weight:700;}
 .mv-head span{font-size:clamp(13px,1vw,18px);opacity:.85;}
 .mv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
-.mv-grid .pcard{padding:12px 14px;}
+.mv-grid .pcard{padding:16px 18px;}
 .mv-grid .pcard-name{font-size:clamp(16px,1.2vw,22px);}
 .mv-grid .pcard-date{font-size:clamp(15.5px,1.2vw,20px);}
 
@@ -345,18 +354,18 @@ select{
   gap:var(--s3);align-items:center;width:100%;
   padding:13px var(--s4);border:1px solid var(--line);border-top:none;
   background:var(--panel);cursor:pointer;text-align:right;
-  border-right:7px solid var(--c);
+  border-right:8px solid var(--c);
 }
-.lrow:hover{background:var(--sunken);}
+.lrow:hover{background:var(--tint);}
 .lrow:last-child{border-radius:0 0 var(--r) var(--r);}
 .lrow-date{font-size:clamp(15.5px,1.2vw,20px);color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
 .lrow-name{font-weight:600;font-size:clamp(15.5px,1.15vw,21px);min-width:0;overflow-wrap:anywhere;}
 .tag{
   display:inline-flex;align-items:center;gap:7px;justify-self:start;
-  background:var(--c);border:1.5px solid var(--c);color:#fff;
+  background:var(--tint);border:1.5px solid var(--c);color:var(--strong);
   font-size:clamp(12.5px,0.9vw,16px);font-weight:700;padding:5px 13px;border-radius:999px;
 }
-.tag .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.92);flex:none;}
+.tag .dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;}
 
 /* ============================================================
    מצב ריק
@@ -374,14 +383,17 @@ select{
 .sec-h span{font-size:clamp(13px,0.95vw,17px);color:var(--muted);}
 .up-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);}
 .up-card{
-  background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);
-  border-radius:var(--r);padding:var(--s3) var(--s4);text-align:right;cursor:pointer;
-  display:flex;flex-direction:column;gap:6px;box-shadow:var(--sh-1);
+  background:var(--tint);border:1px solid rgba(21,32,43,.09);
+  border-right:8px solid var(--c);
+  border-radius:10px;padding:16px 18px;text-align:right;cursor:pointer;
+  display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 3px rgba(21,32,43,.06);
   transition:transform .12s ease,box-shadow .12s ease;
 }
-.up-card:hover{transform:translateY(-2px);box-shadow:var(--sh-2);}
-.up-when{font-size:clamp(13px,0.95vw,17px);color:var(--muted);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
-.up-name{font-weight:700;font-size:clamp(15px,1.12vw,20px);line-height:1.38;}
+.up-card:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(21,32,43,.14);}
+/* התגית בתוך כרטיס מגוון - רקע בהיר כדי שתיבדל מהכרטיס */
+.up-card .tag{background:rgba(255,255,255,.72);}
+.up-when{font-size:clamp(13px,0.95vw,17px);font-weight:700;color:var(--strong);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.up-name{font-weight:700;font-size:clamp(15px,1.12vw,20px);line-height:1.5;color:var(--ink);}
 
 /* ============================================================
    מגירת פרטים
@@ -733,17 +745,42 @@ select{
 
   var WHITE = [255, 255, 255], BLACK = [0, 0, 0];
 
+  // בהירות יחסית וניגודיות, לבדיקת קריאות בזמן ריצה
+  function relLum(rgb) {
+    var a = rgb.map(function (c) {
+      c /= 255;
+      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+
+  function contrast(rgb1, rgb2) {
+    var l1 = relLum(rgb1), l2 = relLum(rgb2);
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  }
+
   function catColor(name) {
     if (colorCache[name]) return colorCache[name];
 
     var solidHex = COLORS_BY_KEY[catKey(name)];
-    var rgb = solidHex ? hexToRgb(solidHex) : hslToHex(hueFromName(name), 62, 30);
+    var rgb = solidHex ? hexToRgb(solidHex) : hslToHex(hueFromName(name), 62, 42);
     var solid = solidHex || rgbStr(rgb);
 
+    // רקע הכרטיס: גוון בהיר של צבע התחום - בהיר, אך עדיין נבדל בין התחומים
+    var tintRgb = mix(rgb, WHITE, 0.78);
+
+    // צבע התאריך: צבע התחום, מוכהה רק כמה שנדרש כדי להיקרא על הגוון הבהיר
+    var strongRgb = rgb.slice(), guard = 0;
+    while (contrast(strongRgb, tintRgb) < 4.6 && guard++ < 14) {
+      strongRgb = mix(strongRgb, BLACK, 0.08);
+    }
+
     colorCache[name] = {
-      solid: solid,                            // רקע מלא לכרטיס ולשבב
-      on:    "#FFFFFF",                        // טקסט לבן - כל הצבעים עומדים ב-AA
-      bar:   rgbStr(mix(rgb, BLACK, 0.18))     // פס ההדגשה, גוון כהה מאותה משפחה
+      solid:  solid,                            // הפס בכרטיס, גבול השבב, מצב נבחר
+      on:     "#FFFFFF",
+      tint:   rgbStr(tintRgb),                  // רקע הכרטיס והשבב שאינו נבחר
+      strong: rgbStr(strongRgb),                // התאריך וטקסט השבב
+      deep:   rgbStr(mix(rgb, BLACK, 0.34))     // שם התחום, גרסה כהה יותר
     };
     return colorCache[name];
   }
@@ -752,7 +789,9 @@ select{
     var c = catColor(name);
     el.style.setProperty("--c", c.solid);
     el.style.setProperty("--on", c.on);
-    el.style.setProperty("--bar", c.bar);
+    el.style.setProperty("--tint", c.tint);
+    el.style.setProperty("--strong", c.strong);
+    el.style.setProperty("--deep", c.deep);
   }
 
   /* ============================================================
