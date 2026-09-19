@@ -61,7 +61,8 @@ body{
   padding-bottom:var(--s6);
 }
 
-.wrap{max-width:1500px;margin:0 auto;padding:0 var(--s5);}
+/* הדשבורד תופס כ-95% מרוחב החלון, עם שוליים קטנים משני הצדדים */
+.wrap{width:95%;max-width:2400px;margin:0 auto;padding:0;}
 
 button,input,select{font-family:inherit;font-size:inherit;color:inherit;}
 :focus-visible{outline:2px solid var(--brand-2);outline-offset:2px;border-radius:var(--r-sm);}
@@ -181,25 +182,43 @@ select{
 }
 .segmented button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:var(--sh-1);font-weight:700;}
 
-/* מקרא התחומים - גלולות עם נקודת צבע */
-.chips{
-  display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;
-  margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--line);
+/* מקרא התחומים - אזור נפרד עם כותרת ברורה */
+.legend{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:var(--s4);box-shadow:var(--sh-1);margin-bottom:var(--s4);
+  border-right:5px solid var(--month-head);
 }
-.chips-title{font-size:13px;font-weight:700;color:var(--ink-2);margin-left:var(--s2);}
+.legend-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
+  flex-wrap:wrap;margin-bottom:var(--s3);
+}
+.legend-head h2{
+  margin:0;font-size:19px;font-weight:800;color:var(--ink);
+  display:flex;align-items:center;gap:9px;
+}
+.legend-head h2::before{
+  content:"";width:5px;height:19px;border-radius:3px;background:var(--month-head);
+}
+.legend-hint{font-size:13px;color:var(--muted);}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .chip{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1.5px solid var(--c);background:var(--tint);color:var(--deep);
-  padding:6px 14px;border-radius:999px;cursor:pointer;font-size:13.5px;font-weight:600;
-  transition:opacity .12s ease,background .12s ease;
+  display:inline-flex;align-items:center;gap:9px;
+  border:2px solid var(--c);background:var(--tint);color:var(--deep);
+  padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14.5px;font-weight:700;
+  transition:opacity .12s ease,background .12s ease,transform .12s ease;
 }
-.chip .dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--c);}
-.chip .n{font-size:12.5px;font-weight:500;opacity:.85;font-variant-numeric:tabular-nums;}
+.chip:hover{transform:translateY(-1px);}
+.chip .dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--c);}
+.chip .n{
+  font-size:13px;font-weight:600;background:rgba(255,255,255,.75);
+  padding:1px 8px;border-radius:999px;font-variant-numeric:tabular-nums;
+}
 .chip[aria-pressed="false"]{
-  border-color:var(--line-2);background:var(--sunken);color:var(--muted);opacity:.7;
+  border-color:var(--line-2);background:var(--sunken);color:var(--muted);opacity:.65;
 }
 .chip[aria-pressed="false"] .dot{background:var(--line-2);}
-.chips-hint{font-size:12.5px;color:var(--muted);align-self:center;}
+.chip[aria-pressed="false"] .n{background:var(--panel);}
 
 /* ============================================================
    הלוח השנתי
@@ -380,11 +399,10 @@ select{
   .planner{grid-template-columns:repeat(3,minmax(0,1fr));}
   .metrics{grid-template-columns:repeat(2,1fr);}
   .up-grid{grid-template-columns:repeat(2,1fr);}
-  .wrap{padding:0 var(--s4);}
 }
 @media (max-width:767px){
   body{font-size:14.5px;}
-  .wrap{padding:0 var(--s3);}
+  .wrap{width:auto;padding:0 var(--s3);}
   .topbar-in{padding:14px 0 16px;gap:var(--s3);}
   h1{font-size:26px;}
   .subtitle{font-size:13px;line-height:1.5;}
@@ -395,7 +413,9 @@ select{
   .metric-ic{width:30px;height:30px;border-radius:8px;}
   .metric-num{font-size:20px;}
   .metric-lbl{font-size:12px;}
-  .toolbar{padding:var(--s3);}
+  .toolbar,.legend{padding:var(--s3);}
+  .legend-head h2{font-size:17px;}
+  .chip{padding:8px 15px;font-size:14px;}
   .search,.field{flex:1 1 100%;max-width:none;}
   .field select{flex:1;}
   .segmented{width:100%;}
@@ -502,9 +522,14 @@ select{
       </div>
     </div>
 
-    <div class="chips" id="chips" role="group" aria-label="סינון לפי תחום">
-      <span class="chips-title">תחומים:</span>
+  </section>
+
+  <section class="legend" aria-labelledby="legendTitle">
+    <div class="legend-head">
+      <h2 id="legendTitle">תחומים</h2>
+      <span class="legend-hint">לחיצה על תחום מסתירה אותו מהלוח · לחיצה נוספת מחזירה אותו</span>
     </div>
+    <div class="chips" id="chips" role="group" aria-label="סינון לפי תחום"></div>
   </section>
 
   <section class="board" aria-label="לוח שנתי">
@@ -1182,7 +1207,6 @@ select{
 
   function renderChips() {
     clear(el.chips);
-    el.chips.appendChild(elem("span", "chips-title", "תחומים:"));
 
     var counts = {};
     state.events.forEach(function (e) { counts[e.category] = (counts[e.category] || 0) + 1; });
@@ -1205,8 +1229,6 @@ select{
 
       el.chips.appendChild(b);
     });
-
-    el.chips.appendChild(elem("span", "chips-hint", "לחיצה על תחום מסתירה או מציגה אותו"));
   }
 
   function renderUpcoming() {
