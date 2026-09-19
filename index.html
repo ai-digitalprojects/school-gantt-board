@@ -277,7 +277,7 @@ select{
 .inner{position:relative;padding:var(--s4);}
 
 /* רשת ששת החודשים */
-.planner{display:grid;grid-template-columns:repeat(var(--pcols,6),minmax(0,1fr));gap:var(--s3);align-items:start;}
+.planner{display:grid;grid-template-columns:repeat(var(--pcols,6),minmax(0,1fr));gap:14px;align-items:start;}
 
 .pcol{
   background:var(--sunken);border:1px solid var(--line);
@@ -294,7 +294,7 @@ select{
   content:"החודש הנוכחי";display:block;margin-top:4px;
   font-size:clamp(10.5px,0.78vw,14px);font-weight:700;letter-spacing:.04em;color:var(--gold);
 }
-.pcol-body{padding:var(--s2);display:flex;flex-direction:column;gap:var(--s2);}
+.pcol-body{padding:10px;display:flex;flex-direction:column;gap:11px;}
 .pcol-empty{padding:var(--s4) var(--s2);text-align:center;color:var(--muted);font-size:clamp(12.5px,0.9vw,16px);}
 
 /* כרטיס אירוע - רקע פסטל ופס צבע בצד */
@@ -327,7 +327,7 @@ select{
 }
 .mv-head h3{margin:0;font-size:clamp(20px,1.7vw,32px);font-weight:700;}
 .mv-head span{font-size:clamp(13px,1vw,18px);opacity:.85;}
-.mv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:var(--s3);}
+.mv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
 .mv-grid .pcard{padding:12px 14px;}
 .mv-grid .pcard-name{font-size:clamp(16px,1.2vw,22px);}
 .mv-grid .pcard-date{font-size:clamp(15.5px,1.2vw,20px);}
@@ -672,20 +672,20 @@ select{
   // הצבע המלא של כל תחום. הוא משמש לפס הצבע בכרטיס, לנקודה ולמקרא,
   // וממנו נגזרים גם רקע הפסטל וצבע הטקסט הכהה.
   var CATEGORY_COLORS = {
-    "ישיבות פדגוגיות":    "#334155",  // צפחה כהה · 10.35
-    "מבחנים והערכה":      "#C2410C",  // כתום שרוף · 5.18
-    "מצוינות":            "#1D4ED8",  // כחול רויאל · 6.70
-    "חגים ומועדים":       "#6D28D9",  // סגול עמוק · 7.10
-    "ימי הורים+הנהגות הורים": "#BE185D",  // מג'נטה כהה · 6.04
-    "הדרכות צוות":        "#A16207",  // זהב כהה · 4.92
-    "רכיבה על אופניים":   "#0F766E",  // טורקיז עמוק · 5.47
-    "אירועים בית-ספריים": "#166534",  // ירוק יער · 7.13
+    "ישיבות פדגוגיות":    "#3F4C60",  // צפחה כהה · 10.35
+    "מבחנים והערכה":      "#C85021",  // כתום שרוף · 5.18
+    "מצוינות":            "#4B60E2",  // כחול רויאל · 6.70
+    "חגים ומועדים":       "#8241E2",  // סגול עמוק · 7.10
+    "ימי הורים+הנהגות הורים": "#D23970",  // מג'נטה כהה · 6.04
+    "הדרכות צוות":        "#A76815",  // זהב כהה · 4.92
+    "רכיבה על אופניים":   "#2A837B",  // טורקיז עמוק · 5.47
+    "אירועים בית-ספריים": "#2E7645",  // ירוק יער · 7.13
 
     // שמות חלופיים לאותם תחומים, למקרה שהכתיב בגיליון ישתנה
-    "אירועים בית־ספריים": "#166534",
-    "ימי הורים":          "#BE185D",
-    "הנהגת הורים":        "#BE185D",
-    "משימות הנהלה":       "#334155",
+    "אירועים בית־ספריים": "#2E7645",
+    "ימי הורים":          "#D23970",
+    "הנהגת הורים":        "#D23970",
+    "משימות הנהלה":       "#3F4C60",
     "ימי זיכרון":         "#1F2937"
   };
 
@@ -743,7 +743,7 @@ select{
     colorCache[name] = {
       solid: solid,                            // רקע מלא לכרטיס ולשבב
       on:    "#FFFFFF",                        // טקסט לבן - כל הצבעים עומדים ב-AA
-      bar:   rgbStr(mix(rgb, BLACK, 0.34))     // פס ההדגשה, גוון כהה מאותה משפחה
+      bar:   rgbStr(mix(rgb, BLACK, 0.18))     // פס ההדגשה, גוון כהה מאותה משפחה
     };
     return colorCache[name];
   }
