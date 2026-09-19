@@ -209,7 +209,7 @@ select{
 .chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .chip{
   display:inline-flex;align-items:center;gap:9px;
-  border:2px solid var(--c);background:var(--tint);color:var(--strong);
+  border:2px solid transparent;background:var(--c);color:var(--on);
   padding:10px 20px;border-radius:999px;cursor:pointer;
   font-size:clamp(15.5px,1.2vw,20px);font-weight:700;
   transition:background .12s ease,border-color .12s ease,box-shadow .12s ease,transform .12s ease;
@@ -218,8 +218,8 @@ select{
 
 /* תחום נבחר - מילוי מלא בצבע התחום */
 .chip[aria-pressed="true"]{
-  background:var(--sel);border-color:var(--sel);color:#fff;
-  box-shadow:0 0 0 4px var(--tint),0 5px 16px rgba(21,32,43,.3);
+  border-color:var(--on);
+  box-shadow:0 0 0 4px var(--c),0 5px 16px rgba(15,23,42,0.34);
   transform:translateY(-1px);
 }
 /* וי הבחירה מופיע רק כשהתחום נבחר */
@@ -227,11 +227,11 @@ select{
   display:none;font-size:1.05em;font-weight:900;line-height:1;margin-inline-end:-2px;
 }
 .chip[aria-pressed="true"] .check{display:inline-block;}
-.chip[aria-pressed="true"] .n{background:rgba(0,0,0,.28);color:#fff;}
-.chip .dot{width:11px;height:11px;border-radius:50%;flex:none;background:var(--c);}
+.chip[aria-pressed="true"] .n{background:var(--on);color:var(--c);}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none;background:var(--on);}
 .chip[aria-pressed="true"] .dot{background:#fff;}
 .chip .n{
-  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:rgba(255,255,255,.7);color:var(--strong);
+  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:var(--on);color:var(--c);
   padding:2px 9px;border-radius:999px;font-variant-numeric:tabular-nums;
 }
 
@@ -302,27 +302,26 @@ select{
 .pcard{
   position:relative;display:flex;flex-direction:column;gap:7px;
   width:100%;text-align:right;cursor:pointer;
-  background:var(--tint);color:var(--ink);
-  border:1px solid rgba(21,32,43,.09);
-  border-right:8px solid var(--c);
+  background:var(--c);color:var(--on);
+  border:none;
   border-radius:10px;padding:14px 16px;
-  box-shadow:0 1px 3px rgba(21,32,43,.06);
+  box-shadow:0 2px 6px rgba(15,23,42,0.16);
   transition:transform .12s ease,box-shadow .12s ease;
 }
-.pcard:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(21,32,43,.12);}
+.pcard:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(15,23,42,.26);}
 .pcard-top{display:flex;align-items:center;gap:7px;}
 .pcard-date{
-  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:var(--strong);
+  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:var(--on);
   font-variant-numeric:tabular-nums;unicode-bidi:isolate;white-space:nowrap;
 }
-.pcard-dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none;}
+.pcard-dot{width:10px;height:10px;border-radius:50%;background:var(--on);flex:none;}
 .pcard-name{
-  font-size:clamp(16px,1.3vw,21px);font-weight:700;color:var(--ink);
+  font-size:clamp(16px,1.3vw,21px);font-weight:700;color:var(--on);
   line-height:1.55;overflow-wrap:break-word;word-break:normal;hyphens:auto;
 }
 .pcard-cat{
-  font-size:clamp(13px,0.95vw,17px);font-weight:600;color:var(--deep);
-  padding-top:2px;border-top:1px solid rgba(21,32,43,.07);
+  font-size:clamp(13px,0.95vw,17px);font-weight:500;color:var(--on);
+  padding-top:5px;border-top:1px solid var(--hair);
 }
 
 /* ============================================================
@@ -356,16 +355,16 @@ select{
   background:var(--panel);cursor:pointer;text-align:right;
   border-right:8px solid var(--c);
 }
-.lrow:hover{background:var(--tint);}
+.lrow:hover{background:#F4F6F9;}
 .lrow:last-child{border-radius:0 0 var(--r) var(--r);}
 .lrow-date{font-size:clamp(15.5px,1.2vw,20px);color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
-.lrow-name{font-weight:600;font-size:clamp(15.5px,1.15vw,21px);min-width:0;overflow-wrap:anywhere;}
+.lrow-name{font-weight:600;font-size:clamp(15.5px,1.15vw,21px);color:#172033;min-width:0;overflow-wrap:anywhere;}
 .tag{
   display:inline-flex;align-items:center;gap:7px;justify-self:start;
-  background:var(--tint);border:1.5px solid var(--c);color:var(--strong);
+  background:var(--c);border:1.5px solid var(--c);color:var(--on);
   font-size:clamp(12.5px,0.9vw,16px);font-weight:700;padding:5px 13px;border-radius:999px;
 }
-.tag .dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;}
+.tag .dot{width:8px;height:8px;border-radius:50%;background:var(--on);flex:none;}
 
 /* ============================================================
    מצב ריק
@@ -383,17 +382,16 @@ select{
 .sec-h span{font-size:clamp(13px,0.95vw,17px);color:var(--muted);}
 .up-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);}
 .up-card{
-  background:var(--tint);border:1px solid rgba(21,32,43,.09);
-  border-right:8px solid var(--c);
+  background:var(--c);border:none;
   border-radius:10px;padding:16px 18px;text-align:right;cursor:pointer;
-  display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 3px rgba(21,32,43,.06);
+  display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 6px rgba(15,23,42,0.16);
   transition:transform .12s ease,box-shadow .12s ease;
 }
-.up-card:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(21,32,43,.14);}
+.up-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(15,23,42,.3);}
 /* התגית בתוך כרטיס מגוון - רקע בהיר כדי שתיבדל מהכרטיס */
-.up-card .tag{background:rgba(255,255,255,.72);}
-.up-when{font-size:clamp(13px,0.95vw,17px);font-weight:700;color:var(--strong);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
-.up-name{font-weight:700;font-size:clamp(15px,1.12vw,20px);line-height:1.5;color:var(--ink);}
+.up-card .tag{background:rgba(0,0,0,.26);border-color:rgba(255,255,255,.45);}
+.up-when{font-size:clamp(13px,0.95vw,17px);font-weight:700;color:var(--on);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.up-name{font-weight:700;font-size:clamp(15px,1.12vw,20px);line-height:1.5;color:var(--on);}
 
 /* ============================================================
    מגירת פרטים
@@ -683,28 +681,41 @@ select{
 
   // הצבע המלא של כל תחום. הוא משמש לפס הצבע בכרטיס, לנקודה ולמקרא,
   // וממנו נגזרים גם רקע הפסטל וצבע הטקסט הכהה.
+  // לכל תחום שני ערכים מדויקים בלבד: צבע ההדגשה והרקע הבהיר.
+  // הערכים משמשים כמו שהם - אין ערבוב, הבהרה, הכהיה או חישוב כלשהו.
+  // לכל תחום שלושה ערכים מדויקים:
+  //   accent - הפס בכרטיס, הנקודה ומסגרת השבב (הצבע ה"חזק")
+  //   deep   - הטקסט הקטן על הרקע הבהיר, ורקע השבב הנבחר
+  //   bg     - רקע הכרטיס והשבב שאינו נבחר
+  // אין ערבוב או חישוב - כל ערך נכתב כפי שהוא.
   var CATEGORY_COLORS = {
-    "ישיבות פדגוגיות":    "#596675",  // צפחה
-    "מבחנים והערכה":      "#B85F42",  // טרקוטה
-    "מצוינות":            "#3F6FA8",  // כחול דנים
-    "חגים ומועדים":       "#785A9E",  // שזיף
-    "ימי הורים+הנהגות הורים": "#A94F68",  // ורוד עתיק
-    "הדרכות צוות":        "#A97824",  // אוכרה
-    "רכיבה על אופניים":   "#387D78",  // טורקיז מאופק
-    "אירועים בית-ספריים": "#557A4B",  // ירוק זית
+    "ישיבות פדגוגיות":        { accent: "#1E3A8A", deep: "#1E3A8A", bg: "#EFF6FF" },  // נייבי
+    "מבחנים והערכה":          { accent: "#C2410C", deep: "#C2410C", bg: "#FFF7ED" },  // חלודה
+    "מצוינות":                { accent: "#166534", deep: "#166534", bg: "#F0FDF4" },  // ירוק כהה
+    "חגים ומועדים":           { accent: "#5B21B6", deep: "#5B21B6", bg: "#F5F3FF" },  // סגול כהה
+    "ימי הורים+הנהגות הורים": { accent: "#9D174D", deep: "#9D174D", bg: "#FDF2F8" },  // ורוד יין
+    "הדרכות צוות":            { accent: "#7C2D12", deep: "#7C2D12", bg: "#FFEDD5" },  // כתום כהה
+    "רכיבה על אופניים":       { accent: "#115E59", deep: "#115E59", bg: "#F0FDFA" },  // טורקיז כהה
+    // צהוב: לבן עליו נותן ניגודיות 1.92, ולכן הטקסט על הכרטיס כהה
+    "אירועים בית-ספריים":     { accent: "#EAB308", deep: "#A16207", bg: "#FEFCE8", ink: "#172033" },  // צהוב
 
     // שמות חלופיים לאותם תחומים, למקרה שהכתיב בגיליון ישתנה
-    "אירועים בית־ספריים": "#557A4B",
-    "ימי הורים":          "#A94F68",
-    "הנהגת הורים":        "#A94F68",
-    "משימות הנהלה":       "#596675",
-    "ימי זיכרון":         "#4A5462"
+    "אירועים בית־ספריים":     { accent: "#EAB308", deep: "#A16207", bg: "#FEFCE8", ink: "#172033" },
+    "ימי הורים":              { accent: "#9D174D", deep: "#9D174D", bg: "#FDF2F8" },
+    "הנהגת הורים":            { accent: "#9D174D", deep: "#9D174D", bg: "#FDF2F8" },
+    "משימות הנהלה":           { accent: "#1E3A8A", deep: "#1E3A8A", bg: "#EFF6FF" },
+    "ימי זיכרון":             { accent: "#334155", deep: "#334155", bg: "#F8FAFC" }
   };
+
+  // תחום שאינו ברשימה מקבל שלישייה ניטרלית קבועה
+  var FALLBACK = { accent: "#475569", deep: "#334155", bg: "#F8FAFC" };
+
+  var colorCache = {};
 
   // "בית־ספריים" בגיליון נכתב לעיתים במקף רגיל ולעיתים במקף עברי.
   // ההשוואה מנרמלת את סוג המקף, כדי ששתי הכתיבות יקבלו את אותו הצבע.
   function catKey(name) {
-    return name.replace(/[־‐-―]/g, "-").replace(/\s+/g, " ").trim();
+    return name.replace(/[\u05BE\u2010-\u2015]/g, "-").replace(/\s+/g, " ").trim();
   }
 
   var COLORS_BY_KEY = (function () {
@@ -713,94 +724,27 @@ select{
     return m;
   })();
 
-  var colorCache = {};
-
-  // תחום שאינו ברשימה מקבל צבע יציב, נגזר משמו
-  function hueFromName(name) {
-    var h = 0;
-    for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 100000;
-    return h % 360;
-  }
-
-  function hslToHex(h, s, l) {
-    s /= 100; l /= 100;
-    var k = function (n) { return (n + h / 30) % 12; };
-    var a = s * Math.min(l, 1 - l);
-    var f = function (n) {
-      var v = l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-      return Math.round(255 * v);
-    };
-    return [f(0), f(8), f(4)];
-  }
-
-  function hexToRgb(hex) {
-    return [1, 3, 5].map(function (i) { return parseInt(hex.substr(i, 2), 16); });
-  }
-
-  function rgbStr(a) { return "rgb(" + a[0] + "," + a[1] + "," + a[2] + ")"; }
-
-  function mix(rgb, target, amount) {
-    return rgb.map(function (c, i) { return Math.round(c + (target[i] - c) * amount); });
-  }
-
-  var WHITE = [255, 255, 255], BLACK = [0, 0, 0];
-
-  // בהירות יחסית וניגודיות, לבדיקת קריאות בזמן ריצה
-  function relLum(rgb) {
-    var a = rgb.map(function (c) {
-      c /= 255;
-      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-    });
-    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
-  }
-
-  function contrast(rgb1, rgb2) {
-    var l1 = relLum(rgb1), l2 = relLum(rgb2);
-    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-  }
-
   function catColor(name) {
     if (colorCache[name]) return colorCache[name];
-
-    var solidHex = COLORS_BY_KEY[catKey(name)];
-    var rgb = solidHex ? hexToRgb(solidHex) : hslToHex(hueFromName(name), 62, 42);
-    var solid = solidHex || rgbStr(rgb);
-
-    // רקע הכרטיס: 12% מצבע התחום בתוך לבן
-    var tintRgb = mix(rgb, WHITE, 0.88);
-
-    // צבע התאריך: צבע התחום, מוכהה רק כמה שנדרש כדי להיקרא על הגוון הבהיר
-    var strongRgb = rgb.slice(), guard = 0;
-    while (contrast(strongRgb, tintRgb) < 4.6 && guard++ < 14) {
-      strongRgb = mix(strongRgb, BLACK, 0.08);
-    }
-
-    // רקע השבב הנבחר: צבע התחום עצמו, מוכהה רק אם טקסט לבן אינו עומד ב-AA
-    // (נדרש עבור הטרקוטה והאוכרה בלבד)
-    var selRgb = rgb.slice(), guardSel = 0;
-    while (contrast(selRgb, WHITE) < 4.5 && guardSel++ < 10) {
-      selRgb = mix(selRgb, BLACK, 0.06);
-    }
-
+    var spec = COLORS_BY_KEY[catKey(name)] || FALLBACK;
     colorCache[name] = {
-      solid:  solid,                            // הפס בכרטיס, הנקודה, גבול השבב
-      on:     "#FFFFFF",
-      tint:   rgbStr(tintRgb),                  // רקע הכרטיס והשבב שאינו נבחר
-      strong: rgbStr(strongRgb),                // התאריך וטקסט השבב
-      deep:   rgbStr(mix(rgb, BLACK, 0.34)),    // שם התחום, גרסה כהה יותר
-      sel:    rgbStr(selRgb)                    // רקע השבב הנבחר
+      accent: spec.accent,
+      deep:   spec.deep,
+      bg:     spec.bg,
+      ink:    spec.ink || "#FFFFFF",                                  // צבע הטקסט על הצבע המלא
+      hair:   spec.ink ? "rgba(0,0,0,.22)" : "rgba(255,255,255,.28)"  // קו ההפרדה בכרטיס
     };
     return colorCache[name];
   }
 
+  // אותם שני ערכים מדויקים בכל מקום שבו התחום מופיע
   function paint(el, name) {
     var c = catColor(name);
-    el.style.setProperty("--c", c.solid);
-    el.style.setProperty("--on", c.on);
-    el.style.setProperty("--tint", c.tint);
-    el.style.setProperty("--strong", c.strong);
+    el.style.setProperty("--c", c.accent);
     el.style.setProperty("--deep", c.deep);
-    el.style.setProperty("--sel", c.sel);
+    el.style.setProperty("--tint", c.bg);
+    el.style.setProperty("--on", c.ink);
+    el.style.setProperty("--hair", c.hair);
   }
 
   /* ============================================================
