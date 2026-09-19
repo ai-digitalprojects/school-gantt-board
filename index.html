@@ -209,24 +209,28 @@ select{
 .chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .chip{
   display:inline-flex;align-items:center;gap:9px;
-  border:2px solid var(--c);background:var(--tint);color:var(--deep);
+  border:2px solid transparent;background:var(--c);color:#fff;
   padding:10px 20px;border-radius:999px;cursor:pointer;
   font-size:clamp(15.5px,1.2vw,20px);font-weight:700;
   transition:background .12s ease,border-color .12s ease,box-shadow .12s ease,transform .12s ease;
 }
-.chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(21,32,43,.14);}
+.chip:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(21,32,43,.28);}
 
 /* תחום נבחר - מילוי מלא בצבע התחום */
 .chip[aria-pressed="true"]{
-  background:var(--sel);border-color:var(--sel);color:#fff;
-  box-shadow:0 3px 12px rgba(21,32,43,.3);
+  border-color:#fff;
+  box-shadow:0 0 0 3px var(--c),0 6px 18px rgba(21,32,43,.42);
+  transform:translateY(-1px);
 }
-.chip[aria-pressed="true"] .dot{background:#fff;}
-.chip[aria-pressed="true"] .n{background:rgba(0,0,0,.26);color:#fff;}
-.chip .dot{width:13px;height:13px;border-radius:50%;flex:none;background:var(--c);
-  box-shadow:0 0 0 2px rgba(255,255,255,.65);}
+/* וי הבחירה מופיע רק כשהתחום נבחר */
+.chip .check{
+  display:none;font-size:1.05em;font-weight:900;line-height:1;margin-inline-end:-2px;
+}
+.chip[aria-pressed="true"] .check{display:inline-block;}
+.chip[aria-pressed="true"] .n{background:rgba(0,0,0,.34);}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none;background:rgba(255,255,255,.92);}
 .chip .n{
-  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:rgba(255,255,255,.72);color:var(--deep);
+  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:rgba(0,0,0,.3);color:#fff;
   padding:2px 9px;border-radius:999px;font-variant-numeric:tabular-nums;
 }
 
@@ -297,20 +301,20 @@ select{
 .pcard{
   position:relative;display:flex;flex-direction:column;gap:3px;
   width:100%;text-align:right;cursor:pointer;
-  background:var(--tint);border:1px solid var(--edge);
-  border-right:5px solid var(--c);
+  background:var(--c);border:none;color:#fff;
+  border-right:6px solid var(--bar);
   border-radius:var(--r-sm);padding:9px 11px;
   transition:transform .12s ease,box-shadow .12s ease;
 }
 .pcard:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
 .pcard-top{display:flex;align-items:center;gap:7px;}
 .pcard-date{
-  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:var(--deep);
+  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:#fff;
   font-variant-numeric:tabular-nums;unicode-bidi:isolate;white-space:nowrap;
 }
-.pcard-dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none;}
-.pcard-name{font-size:clamp(16px,1.3vw,21px);font-weight:600;color:var(--ink);line-height:1.42;overflow-wrap:anywhere;}
-.pcard-cat{font-size:clamp(13px,0.95vw,17px);font-weight:600;color:var(--deep);opacity:.92;}
+.pcard-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.92);flex:none;}
+.pcard-name{font-size:clamp(16px,1.3vw,21px);font-weight:700;color:#fff;line-height:1.42;overflow-wrap:anywhere;}
+.pcard-cat{font-size:clamp(13px,0.95vw,17px);font-weight:500;color:#fff;}
 
 /* ============================================================
    תצוגה חודשית
@@ -341,18 +345,18 @@ select{
   gap:var(--s3);align-items:center;width:100%;
   padding:13px var(--s4);border:1px solid var(--line);border-top:none;
   background:var(--panel);cursor:pointer;text-align:right;
-  border-right:5px solid var(--c);
+  border-right:7px solid var(--c);
 }
-.lrow:hover{background:var(--tint);}
+.lrow:hover{background:var(--sunken);}
 .lrow:last-child{border-radius:0 0 var(--r) var(--r);}
 .lrow-date{font-size:clamp(15.5px,1.2vw,20px);color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
 .lrow-name{font-weight:600;font-size:clamp(15.5px,1.15vw,21px);min-width:0;overflow-wrap:anywhere;}
 .tag{
   display:inline-flex;align-items:center;gap:7px;justify-self:start;
-  background:var(--tint);border:1.5px solid var(--c);color:var(--deep);
+  background:var(--c);border:1.5px solid var(--c);color:#fff;
   font-size:clamp(12.5px,0.9vw,16px);font-weight:700;padding:5px 13px;border-radius:999px;
 }
-.tag .dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;}
+.tag .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.92);flex:none;}
 
 /* ============================================================
    מצב ריק
@@ -668,35 +672,21 @@ select{
   // הצבע המלא של כל תחום. הוא משמש לפס הצבע בכרטיס, לנקודה ולמקרא,
   // וממנו נגזרים גם רקע הפסטל וצבע הטקסט הכהה.
   var CATEGORY_COLORS = {
-    // פלטה מפורשת: אפור-צפחה כהה, להבדלה ברורה מהסגול של חגים ומועדים
-    "ישיבות פדגוגיות": {
-      solid: "#475569",   // פס הצבע בכרטיס, הנקודה ומסגרת השבב
-      tint:  "#F1F5F9",   // רקע כרטיס האירוע ושבב שאינו נבחר
-      edge:  "#CBD5E1",   // מסגרת עדינה סביב כרטיס האירוע
-      deep:  "#334155",   // טקסט על הרקע הבהיר
-      sel:   "#475569"    // רקע השבב הנבחר, עם טקסט לבן
-    },
-    "מבחנים והערכה":      "#B45309",  // ענבר
-    "ימי הורים":          "#0F766E",  // טורקיז
-    "מצוינות":            "#0369A1",  // תכלת
-    "הנהגת הורים":        "#E11D48",  // ורוד
-    "חגים ומועדים":       "#7C3AED",  // סגול
-    "אירועים בית־ספריים": "#15803D",  // ירוק
-    "משימות הנהלה":       "#475569",  // סלייט
-    "ימי זיכרון":         "#1F2937",  // פחם
+    "ישיבות פדגוגיות":    "#334155",  // צפחה כהה · 10.35
+    "מבחנים והערכה":      "#C2410C",  // כתום שרוף · 5.18
+    "מצוינות":            "#1D4ED8",  // כחול רויאל · 6.70
+    "חגים ומועדים":       "#6D28D9",  // סגול עמוק · 7.10
+    "ימי הורים+הנהגות הורים": "#BE185D",  // מג'נטה כהה · 6.04
+    "הדרכות צוות":        "#A16207",  // זהב כהה · 4.92
+    "רכיבה על אופניים":   "#0F766E",  // טורקיז עמוק · 5.47
+    "אירועים בית-ספריים": "#166534",  // ירוק יער · 7.13
 
-    // שמות התחומים כפי שהם מופיעים בגיליון כיום, ממופים לאותם תשעה צבעים
-    "ימי הורים+הנהגות הורים": "#0F766E",  // טורקיז, כמו "ימי הורים"
-    // פלטה מפורשת: הזהב בהיר מכדי לשאת טקסט לבן, ולכן למצב הנבחר
-    // מוגדר גוון ענבר כהה יותר מאותה משפחה.
-    "הדרכות צוות": {
-      solid: "#CA8A04",   // פס הצבע בכרטיס, הנקודה ומסגרת השבב
-      tint:  "#FEF3C7",   // רקע כרטיס האירוע ושבב שאינו נבחר
-      edge:  "#F2DDA0",   // מסגרת עדינה סביב כרטיס האירוע
-      deep:  "#713F12",   // טקסט על הרקע הבהיר
-      sel:   "#A16207"    // רקע השבב הנבחר, עם טקסט לבן
-    },
-    "רכיבה על אופניים":       "#E11D48"   // ורוד
+    // שמות חלופיים לאותם תחומים, למקרה שהכתיב בגיליון ישתנה
+    "אירועים בית־ספריים": "#166534",
+    "ימי הורים":          "#BE185D",
+    "הנהגת הורים":        "#BE185D",
+    "משימות הנהלה":       "#334155",
+    "ימי זיכרון":         "#1F2937"
   };
 
   // "בית־ספריים" בגיליון נכתב לעיתים במקף רגיל ולעיתים במקף עברי.
@@ -746,45 +736,23 @@ select{
   function catColor(name) {
     if (colorCache[name]) return colorCache[name];
 
-    var spec = COLORS_BY_KEY[catKey(name)];
-    var c;
+    var solidHex = COLORS_BY_KEY[catKey(name)];
+    var rgb = solidHex ? hexToRgb(solidHex) : hslToHex(hueFromName(name), 62, 30);
+    var solid = solidHex || rgbStr(rgb);
 
-    if (spec && typeof spec === "object") {
-      // פלטה שהוגדרה במפורש עבור התחום
-      var sr = hexToRgb(spec.solid);
-      c = {
-        solid: spec.solid,
-        on:    "#FFFFFF",
-        tint:  spec.tint || rgbStr(mix(sr, WHITE, 0.90)),
-        edge:  spec.edge || rgbStr(mix(sr, WHITE, 0.74)),
-        deep:  spec.deep || rgbStr(mix(sr, BLACK, 0.26)),
-        sel:   spec.sel  || spec.solid
-      };
-    } else {
-      var rgb = spec ? hexToRgb(spec) : hslToHex(hueFromName(name), 55, 32);
-      var solid = spec || rgbStr(rgb);
-      c = {
-        solid: solid,                              // פס הצבע, הנקודה והמקרא
-        on:    "#FFFFFF",
-        tint:  rgbStr(mix(rgb, WHITE, 0.90)),      // רקע פסטל לכרטיס
-        edge:  rgbStr(mix(rgb, WHITE, 0.74)),      // מסגרת עדינה
-        deep:  rgbStr(mix(rgb, BLACK, 0.26)),      // טקסט כהה על הפסטל
-        sel:   solid                               // ברירת מחדל: הנבחר זהה למלא
-      };
-    }
-
-    colorCache[name] = c;
-    return c;
+    colorCache[name] = {
+      solid: solid,                            // רקע מלא לכרטיס ולשבב
+      on:    "#FFFFFF",                        // טקסט לבן - כל הצבעים עומדים ב-AA
+      bar:   rgbStr(mix(rgb, BLACK, 0.34))     // פס ההדגשה, גוון כהה מאותה משפחה
+    };
+    return colorCache[name];
   }
 
   function paint(el, name) {
     var c = catColor(name);
     el.style.setProperty("--c", c.solid);
     el.style.setProperty("--on", c.on);
-    el.style.setProperty("--tint", c.tint);
-    el.style.setProperty("--edge", c.edge);
-    el.style.setProperty("--deep", c.deep);
-    el.style.setProperty("--sel", c.sel);
+    el.style.setProperty("--bar", c.bar);
   }
 
   /* ============================================================
@@ -1290,6 +1258,7 @@ select{
       paint(b, cat);
       b.setAttribute("aria-pressed", state.selected[cat] ? "true" : "false");
       b.setAttribute("aria-label", cat + ", " + eventsWord(counts[cat]));
+      b.appendChild(elem("span", "check", "✓"));   // מוצג רק כשהתחום נבחר
       b.appendChild(elem("span", "dot"));
       b.appendChild(document.createTextNode(cat));
       b.appendChild(elem("span", "n", String(counts[cat])));
