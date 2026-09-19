@@ -218,7 +218,7 @@ select{
 
 /* תחום נבחר - מילוי מלא בצבע התחום */
 .chip[aria-pressed="true"]{
-  background:var(--c);border-color:var(--c);color:#fff;
+  background:var(--sel);border-color:var(--sel);color:#fff;
   box-shadow:0 3px 12px rgba(21,32,43,.3);
 }
 .chip[aria-pressed="true"] .dot{background:#fff;}
@@ -680,7 +680,15 @@ select{
 
     // שמות התחומים כפי שהם מופיעים בגיליון כיום, ממופים לאותם תשעה צבעים
     "ימי הורים+הנהגות הורים": "#0F766E",  // טורקיז, כמו "ימי הורים"
-    "הדרכות צוות":            "#475569",  // סלייט
+    // פלטה מפורשת: הזהב בהיר מכדי לשאת טקסט לבן, ולכן למצב הנבחר
+    // מוגדר גוון ענבר כהה יותר מאותה משפחה.
+    "הדרכות צוות": {
+      solid: "#CA8A04",   // פס הצבע בכרטיס, הנקודה ומסגרת השבב
+      tint:  "#FEF3C7",   // רקע כרטיס האירוע ושבב שאינו נבחר
+      edge:  "#F2DDA0",   // מסגרת עדינה סביב כרטיס האירוע
+      deep:  "#713F12",   // טקסט על הרקע הבהיר
+      sel:   "#A16207"    // רקע השבב הנבחר, עם טקסט לבן
+    },
     "רכיבה על אופניים":       "#E11D48"   // ורוד
   };
 
@@ -731,18 +739,35 @@ select{
   function catColor(name) {
     if (colorCache[name]) return colorCache[name];
 
-    var solidHex = COLORS_BY_KEY[catKey(name)];
-    var rgb = solidHex ? hexToRgb(solidHex) : hslToHex(hueFromName(name), 55, 32);
-    var solid = solidHex || rgbStr(rgb);
+    var spec = COLORS_BY_KEY[catKey(name)];
+    var c;
 
-    colorCache[name] = {
-      solid: solid,                              // פס הצבע, הנקודה והמקרא
-      on:    "#FFFFFF",
-      tint:  rgbStr(mix(rgb, WHITE, 0.90)),      // רקע פסטל לכרטיס
-      edge:  rgbStr(mix(rgb, WHITE, 0.74)),      // מסגרת עדינה
-      deep:  rgbStr(mix(rgb, BLACK, 0.26))       // טקסט כהה על הפסטל
-    };
-    return colorCache[name];
+    if (spec && typeof spec === "object") {
+      // פלטה שהוגדרה במפורש עבור התחום
+      var sr = hexToRgb(spec.solid);
+      c = {
+        solid: spec.solid,
+        on:    "#FFFFFF",
+        tint:  spec.tint || rgbStr(mix(sr, WHITE, 0.90)),
+        edge:  spec.edge || rgbStr(mix(sr, WHITE, 0.74)),
+        deep:  spec.deep || rgbStr(mix(sr, BLACK, 0.26)),
+        sel:   spec.sel  || spec.solid
+      };
+    } else {
+      var rgb = spec ? hexToRgb(spec) : hslToHex(hueFromName(name), 55, 32);
+      var solid = spec || rgbStr(rgb);
+      c = {
+        solid: solid,                              // פס הצבע, הנקודה והמקרא
+        on:    "#FFFFFF",
+        tint:  rgbStr(mix(rgb, WHITE, 0.90)),      // רקע פסטל לכרטיס
+        edge:  rgbStr(mix(rgb, WHITE, 0.74)),      // מסגרת עדינה
+        deep:  rgbStr(mix(rgb, BLACK, 0.26)),      // טקסט כהה על הפסטל
+        sel:   solid                               // ברירת מחדל: הנבחר זהה למלא
+      };
+    }
+
+    colorCache[name] = c;
+    return c;
   }
 
   function paint(el, name) {
@@ -752,6 +777,7 @@ select{
     el.style.setProperty("--tint", c.tint);
     el.style.setProperty("--edge", c.edge);
     el.style.setProperty("--deep", c.deep);
+    el.style.setProperty("--sel", c.sel);
   }
 
   /* ============================================================
