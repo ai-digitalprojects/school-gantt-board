@@ -61,8 +61,12 @@ body{
   padding-bottom:var(--s6);
 }
 
-/* הדשבורד תופס כ-95% מרוחב החלון, עם שוליים קטנים משני הצדדים */
-.wrap{width:95%;max-width:2400px;margin:0 auto;padding:0;}
+/* הדשבורד תופס את כל רוחב המסך, למעט שוליים קטנים.
+   max-width:100% מונע גלילה אופקית כשקיים פס גלילה אנכי. */
+.wrap{width:calc(100vw - 32px);max-width:100%;margin:0 auto;padding:0;}
+
+/* כל מקטעי הדשבורד נפרשים על מלוא רוחב המכל */
+.metrics,.toolbar,.legend,.board,.upcoming{width:100%;}
 
 button,input,select{font-family:inherit;font-size:inherit;color:inherit;}
 :focus-visible{outline:2px solid var(--brand-2);outline-offset:2px;border-radius:var(--r-sm);}
@@ -204,21 +208,33 @@ select{
 .chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .chip{
   display:inline-flex;align-items:center;gap:9px;
-  border:2px solid var(--c);background:var(--tint);color:var(--deep);
+  border:2px solid var(--edge);background:var(--panel);color:var(--ink-2);
   padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14.5px;font-weight:700;
-  transition:opacity .12s ease,background .12s ease,transform .12s ease;
+  transition:background .12s ease,border-color .12s ease,box-shadow .12s ease,transform .12s ease;
 }
-.chip:hover{transform:translateY(-1px);}
+.chip:hover{border-color:var(--c);transform:translateY(-1px);}
+
+/* תחום נבחר - מילוי מלא בצבע התחום */
+.chip[aria-pressed="true"]{
+  background:var(--c);border-color:var(--c);color:#fff;
+  box-shadow:0 2px 10px rgba(21,32,43,.22);
+}
+.chip[aria-pressed="true"] .dot{background:#fff;}
+.chip[aria-pressed="true"] .n{background:rgba(255,255,255,.24);color:#fff;}
 .chip .dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--c);}
 .chip .n{
-  font-size:13px;font-weight:600;background:rgba(255,255,255,.75);
+  font-size:13px;font-weight:600;background:var(--sunken);color:var(--muted);
   padding:1px 8px;border-radius:999px;font-variant-numeric:tabular-nums;
 }
-.chip[aria-pressed="false"]{
-  border-color:var(--line-2);background:var(--sunken);color:var(--muted);opacity:.65;
+
+/* כפתור "הצג הכל" */
+.show-all{
+  display:inline-flex;align-items:center;gap:7px;
+  border:2px solid var(--month-head);background:var(--panel);color:var(--month-head);
+  padding:8px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:700;
 }
-.chip[aria-pressed="false"] .dot{background:var(--line-2);}
-.chip[aria-pressed="false"] .n{background:var(--panel);}
+.show-all:hover{background:var(--month-head);color:#fff;}
+.show-all[data-active="true"]{background:var(--month-head);color:#fff;}
 
 /* ============================================================
    הלוח השנתי
@@ -527,7 +543,14 @@ select{
   <section class="legend" aria-labelledby="legendTitle">
     <div class="legend-head">
       <h2 id="legendTitle">תחומים</h2>
-      <span class="legend-hint">לחיצה על תחום מסתירה אותו מהלוח · לחיצה נוספת מחזירה אותו</span>
+      <span class="legend-hint">בחרו תחום אחד או יותר להצגת האירועים המתאימים בלבד</span>
+      <button class="show-all" id="showAllBtn" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12h18M3 6h18M3 18h18"></path>
+        </svg>
+        הצג הכל
+      </button>
     </div>
     <div class="chips" id="chips" role="group" aria-label="סינון לפי תחום"></div>
   </section>
@@ -735,7 +758,7 @@ select{
   var state = {
     events: [],
     categories: [],
-    hidden: {},
+    selected: {},            // תחומים שנבחרו להצגה; ריק = הכול מוצג
     search: "",
     month: "all",
     monthAuto: false,
@@ -752,6 +775,7 @@ select{
     search: document.getElementById("search"),
     monthSel: document.getElementById("monthSel"),
     resetBtn: document.getElementById("resetBtn"),
+    showAllBtn: document.getElementById("showAllBtn"),
     refreshBtn: document.getElementById("refreshBtn"),
     printBtn: document.getElementById("printBtn"),
     scroller: document.getElementById("scroller"),
@@ -946,10 +970,16 @@ select{
      6. סינון
      ============================================================ */
 
+  function selectedCats() {
+    return Object.keys(state.selected).filter(function (k) { return state.selected[k]; });
+  }
+
   function visibleEvents() {
     var q = state.search.trim().toLowerCase();
+    var sel = selectedCats();
     return state.events.filter(function (ev) {
-      if (state.hidden[ev.category]) return false;
+      // ללא בחירה מוצגים כל התחומים; אחרת רק התחומים שנבחרו
+      if (sel.length && !state.selected[ev.category]) return false;
       if (q && (ev.name + " " + ev.category).toLowerCase().indexOf(q) === -1) return false;
       if (state.month !== "all") {
         var mi = +state.month;
@@ -962,8 +992,7 @@ select{
   function filtersActive() {
     if (state.search.trim()) return true;
     if (state.month !== "all") return true;
-    for (var k in state.hidden) { if (state.hidden[k]) return true; }
-    return false;
+    return selectedCats().length > 0;
   }
 
   function byStart(a, b) {
@@ -1216,19 +1245,35 @@ select{
       var b = elem("button", "chip");
       b.type = "button";
       paint(b, cat);
-      b.setAttribute("aria-pressed", state.hidden[cat] ? "false" : "true");
+      b.setAttribute("aria-pressed", state.selected[cat] ? "true" : "false");
+      b.setAttribute("aria-label", cat + ", " + eventsWord(counts[cat]));
       b.appendChild(elem("span", "dot"));
       b.appendChild(document.createTextNode(cat));
       b.appendChild(elem("span", "n", String(counts[cat])));
 
       b.addEventListener("click", function () {
-        state.hidden[cat] = !state.hidden[cat];
-        b.setAttribute("aria-pressed", state.hidden[cat] ? "false" : "true");
+        // בחירה מצטברת: כל לחיצה מוסיפה או מסירה תחום מהבחירה
+        state.selected[cat] = !state.selected[cat];
+        b.setAttribute("aria-pressed", state.selected[cat] ? "true" : "false");
+        syncShowAll();
         refreshViews();
       });
 
       el.chips.appendChild(b);
     });
+
+    syncShowAll();
+  }
+
+  // "הצג הכל" מודגש כשאין בחירה, כלומר כשכל התחומים מוצגים
+  function syncShowAll() {
+    el.showAllBtn.setAttribute("data-active", selectedCats().length ? "false" : "true");
+  }
+
+  function showAllCategories() {
+    state.selected = {};
+    renderChips();
+    refreshViews();
   }
 
   function renderUpcoming() {
@@ -1475,7 +1520,7 @@ select{
     state.search = "";
     state.month = "all";
     state.monthAuto = false;
-    state.hidden = {};
+    state.selected = {};
     el.search.value = "";
     el.monthSel.value = "all";
     renderChips();
@@ -1519,6 +1564,7 @@ select{
   });
 
   el.resetBtn.addEventListener("click", resetFilters);
+  el.showAllBtn.addEventListener("click", showAllCategories);
   el.refreshBtn.addEventListener("click", function () { loadData(true); });
   el.printBtn.addEventListener("click", function () { window.print(); });
 
