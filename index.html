@@ -55,8 +55,8 @@ body{
   font-family:Heebo,'Segoe UI',Arial,Helvetica,sans-serif;
   background:var(--bg);
   color:var(--ink);
-  font-size:15px;
-  line-height:1.55;
+  font-size:clamp(15px,0.95vw,17px);
+  line-height:1.6;
   -webkit-font-smoothing:antialiased;
   padding-bottom:var(--s6);
 }
@@ -84,25 +84,26 @@ button,input,select{font-family:inherit;font-size:inherit;color:inherit;}
   flex-wrap:wrap;padding:16px 0 18px;
 }
 .brandline{display:flex;align-items:center;gap:var(--s3);margin-bottom:5px;}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;}
+.eyebrow{font-size:clamp(11px,0.8vw,15px);font-weight:700;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;}
 .ro-tag{
-  font-size:10.5px;font-weight:600;color:var(--navy-sub);letter-spacing:.06em;
+  font-size:clamp(10.5px,0.75vw,14px);font-weight:600;color:var(--navy-sub);letter-spacing:.06em;
   border:1px solid rgba(255,255,255,.26);padding:2px 9px;border-radius:999px;
 }
 h1{
   font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif;
-  font-size:34px;font-weight:800;margin:0;line-height:1.1;color:var(--navy-ink);
+  font-size:clamp(28px,2.3vw,46px);font-weight:800;margin:0;line-height:1.12;color:var(--navy-ink);
 }
-.subtitle{margin:7px 0 0;color:var(--navy-sub);font-size:14px;}
+.subtitle{margin:8px 0 0;color:var(--navy-sub);font-size:clamp(14px,1.02vw,19px);}
 
 .topbar-actions{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;}
-.stamp{font-size:11.5px;color:var(--navy-sub);text-align:left;}
-.stamp b{display:block;color:#E6EDF5;font-weight:600;font-size:12.5px;}
+.stamp{font-size:clamp(11.5px,0.8vw,15px);color:var(--navy-sub);text-align:left;}
+.stamp b{display:block;color:#E6EDF5;font-weight:600;font-size:clamp(12.5px,0.9vw,16px);}
 
 .btn{
   display:inline-flex;align-items:center;gap:7px;
   border:1px solid var(--line-2);background:var(--panel);color:var(--ink-2);
-  padding:9px 15px;border-radius:var(--r-sm);cursor:pointer;font-weight:500;
+  padding:10px 17px;border-radius:var(--r-sm);cursor:pointer;font-weight:600;
+  font-size:clamp(14px,0.95vw,17px);
   transition:background .13s ease,border-color .13s ease,box-shadow .13s ease;
 }
 .btn:hover{background:var(--sunken);border-color:#C3D0DB;}
@@ -142,13 +143,13 @@ h1{
   box-shadow:var(--sh-1);
 }
 .metric-ic{
-  width:36px;height:36px;border-radius:10px;flex:none;
+  width:clamp(36px,2.6vw,50px);height:clamp(36px,2.6vw,50px);border-radius:10px;flex:none;
   display:flex;align-items:center;justify-content:center;
   background:var(--brand-tint);color:var(--brand);
 }
-.metric-ic svg{width:18px;height:18px;}
-.metric-num{font-size:24px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums;}
-.metric-lbl{font-size:13px;color:var(--muted);margin-top:1px;}
+.metric-ic svg{width:clamp(18px,1.3vw,25px);height:clamp(18px,1.3vw,25px);}
+.metric-num{font-size:clamp(24px,1.9vw,38px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums;}
+.metric-lbl{font-size:clamp(13px,0.95vw,17px);color:var(--muted);margin-top:2px;}
 
 /* ============================================================
    סרגל סינון
@@ -166,15 +167,15 @@ h1{
 }
 .search input{
   width:100%;padding:10px 36px 10px 12px;border:1px solid var(--line-2);
-  border-radius:var(--r-sm);background:var(--sunken);font-size:14.5px;
+  border-radius:var(--r-sm);background:var(--sunken);font-size:clamp(14.5px,1vw,18px);
 }
 .search input:focus{background:var(--panel);}
 
 .field{display:flex;align-items:center;gap:7px;}
-.field label{font-size:13.5px;color:var(--muted);}
+.field label{font-size:clamp(13.5px,0.95vw,17px);color:var(--muted);font-weight:600;}
 select{
   padding:9px 11px;border:1px solid var(--line-2);border-radius:var(--r-sm);
-  background:var(--sunken);cursor:pointer;font-size:14.5px;
+  background:var(--sunken);cursor:pointer;font-size:clamp(14.5px,1vw,18px);
 }
 
 .spacer{flex:1 1 auto;}
@@ -182,7 +183,7 @@ select{
 .segmented{display:flex;background:var(--sunken);border:1px solid var(--line-2);border-radius:var(--r-sm);padding:3px;gap:3px;}
 .segmented button{
   border:none;background:transparent;padding:7px 16px;border-radius:6px;
-  cursor:pointer;font-weight:500;color:var(--muted);font-size:14.5px;
+  cursor:pointer;font-weight:600;color:var(--muted);font-size:clamp(14.5px,1vw,18px);
 }
 .segmented button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:var(--sh-1);font-weight:700;}
 
@@ -197,41 +198,43 @@ select{
   flex-wrap:wrap;margin-bottom:var(--s3);
 }
 .legend-head h2{
-  margin:0;font-size:19px;font-weight:800;color:var(--ink);
+  margin:0;font-size:clamp(21px,1.6vw,31px);font-weight:800;color:var(--ink);
   display:flex;align-items:center;gap:9px;
 }
 .legend-head h2::before{
-  content:"";width:5px;height:19px;border-radius:3px;background:var(--month-head);
+  content:"";width:6px;height:clamp(21px,1.6vw,31px);border-radius:3px;background:var(--month-head);
 }
-.legend-hint{font-size:13px;color:var(--muted);}
+.legend-hint{font-size:clamp(14px,1.05vw,19px);color:var(--muted);}
 
 .chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .chip{
   display:inline-flex;align-items:center;gap:9px;
-  border:2px solid var(--edge);background:var(--panel);color:var(--ink-2);
-  padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14.5px;font-weight:700;
+  border:2px solid var(--c);background:var(--tint);color:var(--deep);
+  padding:10px 20px;border-radius:999px;cursor:pointer;
+  font-size:clamp(15.5px,1.2vw,20px);font-weight:700;
   transition:background .12s ease,border-color .12s ease,box-shadow .12s ease,transform .12s ease;
 }
-.chip:hover{border-color:var(--c);transform:translateY(-1px);}
+.chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(21,32,43,.14);}
 
 /* תחום נבחר - מילוי מלא בצבע התחום */
 .chip[aria-pressed="true"]{
   background:var(--c);border-color:var(--c);color:#fff;
-  box-shadow:0 2px 10px rgba(21,32,43,.22);
+  box-shadow:0 3px 12px rgba(21,32,43,.3);
 }
 .chip[aria-pressed="true"] .dot{background:#fff;}
-.chip[aria-pressed="true"] .n{background:rgba(255,255,255,.24);color:#fff;}
-.chip .dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--c);}
+.chip[aria-pressed="true"] .n{background:rgba(0,0,0,.26);color:#fff;}
+.chip .dot{width:13px;height:13px;border-radius:50%;flex:none;background:var(--c);
+  box-shadow:0 0 0 2px rgba(255,255,255,.65);}
 .chip .n{
-  font-size:13px;font-weight:600;background:var(--sunken);color:var(--muted);
-  padding:1px 8px;border-radius:999px;font-variant-numeric:tabular-nums;
+  font-size:clamp(13px,0.92vw,17px);font-weight:700;background:rgba(255,255,255,.72);color:var(--deep);
+  padding:2px 9px;border-radius:999px;font-variant-numeric:tabular-nums;
 }
 
 /* כפתור "הצג הכל" */
 .show-all{
   display:inline-flex;align-items:center;gap:7px;
   border:2px solid var(--month-head);background:var(--panel);color:var(--month-head);
-  padding:8px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:700;
+  padding:9px 18px;border-radius:999px;cursor:pointer;font-size:clamp(14px,1vw,18px);font-weight:700;
 }
 .show-all:hover{background:var(--month-head);color:#fff;}
 .show-all[data-active="true"]{background:var(--month-head);color:#fff;}
@@ -247,19 +250,19 @@ select{
   display:flex;align-items:center;justify-content:space-between;gap:var(--s3);
   padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);flex-wrap:wrap;
 }
-.board-title h2{font-size:16px;font-weight:700;margin:0;}
-.board-title .meta{font-size:13px;color:var(--muted);}
+.board-title h2{font-size:clamp(16px,1.25vw,24px);font-weight:700;margin:0;}
+.board-title .meta{font-size:clamp(13px,0.95vw,17px);color:var(--muted);}
 
 /* ניווט בין שתי התקופות */
 .period-nav{display:flex;align-items:center;gap:var(--s2);}
 .period-tabs{display:flex;background:var(--sunken);border:1px solid var(--line-2);border-radius:var(--r-sm);padding:3px;gap:3px;}
 .period-tabs button{
   border:none;background:transparent;padding:7px 16px;border-radius:6px;
-  cursor:pointer;font-weight:600;color:var(--muted);font-size:14px;white-space:nowrap;
+  cursor:pointer;font-weight:700;color:var(--muted);font-size:clamp(14px,1.05vw,19px);white-space:nowrap;
 }
 .period-tabs button[aria-pressed="true"]{background:var(--month-head);color:#fff;box-shadow:var(--sh-1);}
 .pnav{
-  width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);
+  width:clamp(36px,2.5vw,46px);height:clamp(36px,2.5vw,46px);border-radius:50%;border:1px solid var(--line-2);
   background:var(--panel);color:var(--ink-2);cursor:pointer;
   display:flex;align-items:center;justify-content:center;flex:none;
 }
@@ -270,7 +273,7 @@ select{
 .inner{position:relative;padding:var(--s4);}
 
 /* רשת ששת החודשים */
-.planner{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--s3);align-items:start;}
+.planner{display:grid;grid-template-columns:repeat(var(--pcols,6),minmax(0,1fr));gap:var(--s3);align-items:start;}
 
 .pcol{
   background:var(--sunken);border:1px solid var(--line);
@@ -278,17 +281,17 @@ select{
 }
 .pcol-head{
   background:linear-gradient(180deg,var(--month-head-2) 0%,var(--month-head) 100%);
-  color:#fff;padding:11px var(--s3);text-align:center;
-  font-size:16px;font-weight:700;line-height:1.25;
+  color:#fff;padding:13px var(--s3);text-align:center;
+  font-size:clamp(19.5px,1.55vw,27px);font-weight:700;line-height:1.25;
 }
-.pcol-head span{display:block;font-size:12px;font-weight:500;opacity:.8;}
+.pcol-head span{display:block;font-size:clamp(13px,0.95vw,17px);font-weight:500;opacity:.85;}
 .pcol.now .pcol-head{box-shadow:inset 0 -4px 0 var(--gold);}
 .pcol.now .pcol-head::after{
-  content:"החודש הנוכחי";display:block;margin-top:3px;
-  font-size:10.5px;font-weight:700;letter-spacing:.04em;color:var(--gold);
+  content:"החודש הנוכחי";display:block;margin-top:4px;
+  font-size:clamp(10.5px,0.78vw,14px);font-weight:700;letter-spacing:.04em;color:var(--gold);
 }
 .pcol-body{padding:var(--s2);display:flex;flex-direction:column;gap:var(--s2);}
-.pcol-empty{padding:var(--s4) var(--s2);text-align:center;color:var(--muted);font-size:12.5px;}
+.pcol-empty{padding:var(--s4) var(--s2);text-align:center;color:var(--muted);font-size:clamp(12.5px,0.9vw,16px);}
 
 /* כרטיס אירוע - רקע פסטל ופס צבע בצד */
 .pcard{
@@ -302,12 +305,12 @@ select{
 .pcard:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
 .pcard-top{display:flex;align-items:center;gap:7px;}
 .pcard-date{
-  font-size:13px;font-weight:800;color:var(--deep);
+  font-size:clamp(14.5px,1.12vw,19px);font-weight:800;color:var(--deep);
   font-variant-numeric:tabular-nums;unicode-bidi:isolate;white-space:nowrap;
 }
-.pcard-dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;}
-.pcard-name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;overflow-wrap:anywhere;}
-.pcard-cat{font-size:11.5px;font-weight:600;color:var(--deep);opacity:.9;}
+.pcard-dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none;}
+.pcard-name{font-size:clamp(16px,1.3vw,21px);font-weight:600;color:var(--ink);line-height:1.42;overflow-wrap:anywhere;}
+.pcard-cat{font-size:clamp(13px,0.95vw,17px);font-weight:600;color:var(--deep);opacity:.92;}
 
 /* ============================================================
    תצוגה חודשית
@@ -318,19 +321,19 @@ select{
   display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
   margin-bottom:var(--s4);
 }
-.mv-head h3{margin:0;font-size:20px;font-weight:700;}
-.mv-head span{font-size:13px;opacity:.85;}
+.mv-head h3{margin:0;font-size:clamp(20px,1.7vw,32px);font-weight:700;}
+.mv-head span{font-size:clamp(13px,1vw,18px);opacity:.85;}
 .mv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:var(--s3);}
 .mv-grid .pcard{padding:12px 14px;}
-.mv-grid .pcard-name{font-size:15px;}
-.mv-grid .pcard-date{font-size:14px;}
+.mv-grid .pcard-name{font-size:clamp(16px,1.2vw,22px);}
+.mv-grid .pcard-date{font-size:clamp(15.5px,1.2vw,20px);}
 
 /* ============================================================
    תצוגת רשימה
    ============================================================ */
 .list-head{
   display:grid;grid-template-columns:190px minmax(0,1fr) 210px;gap:var(--s3);
-  padding:10px var(--s4);font-size:13px;font-weight:700;color:var(--muted);
+  padding:11px var(--s4);font-size:clamp(13.5px,0.98vw,18px);font-weight:700;color:var(--muted);
   background:var(--sunken);border:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;
 }
 .lrow{
@@ -342,12 +345,12 @@ select{
 }
 .lrow:hover{background:var(--tint);}
 .lrow:last-child{border-radius:0 0 var(--r) var(--r);}
-.lrow-date{font-size:14px;color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
-.lrow-name{font-weight:600;font-size:15px;min-width:0;overflow-wrap:anywhere;}
+.lrow-date{font-size:clamp(15.5px,1.2vw,20px);color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.lrow-name{font-weight:600;font-size:clamp(15.5px,1.15vw,21px);min-width:0;overflow-wrap:anywhere;}
 .tag{
   display:inline-flex;align-items:center;gap:7px;justify-self:start;
   background:var(--tint);border:1.5px solid var(--c);color:var(--deep);
-  font-size:12.5px;font-weight:700;padding:4px 12px;border-radius:999px;
+  font-size:clamp(12.5px,0.9vw,16px);font-weight:700;padding:5px 13px;border-radius:999px;
 }
 .tag .dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;}
 
@@ -356,15 +359,15 @@ select{
    ============================================================ */
 .empty{padding:var(--s6) var(--s4);text-align:center;color:var(--muted);}
 .empty svg{width:38px;height:38px;color:var(--line-2);margin-bottom:var(--s2);}
-.empty p{margin:0 0 var(--s3);font-size:15px;}
+.empty p{margin:0 0 var(--s3);font-size:clamp(15px,1.1vw,19px);}
 
 /* ============================================================
    אירועים קרובים
    ============================================================ */
 .upcoming{margin-top:var(--s5);}
 .sec-h{display:flex;align-items:baseline;gap:var(--s2);margin-bottom:var(--s3);}
-.sec-h h2{font-size:16px;font-weight:700;margin:0;}
-.sec-h span{font-size:13px;color:var(--muted);}
+.sec-h h2{font-size:clamp(17px,1.3vw,25px);font-weight:700;margin:0;}
+.sec-h span{font-size:clamp(13px,0.95vw,17px);color:var(--muted);}
 .up-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);}
 .up-card{
   background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);
@@ -373,8 +376,8 @@ select{
   transition:transform .12s ease,box-shadow .12s ease;
 }
 .up-card:hover{transform:translateY(-2px);box-shadow:var(--sh-2);}
-.up-when{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
-.up-name{font-weight:700;font-size:14.5px;line-height:1.35;}
+.up-when{font-size:clamp(13px,0.95vw,17px);color:var(--muted);font-variant-numeric:tabular-nums;unicode-bidi:isolate;}
+.up-name{font-weight:700;font-size:clamp(15px,1.12vw,20px);line-height:1.38;}
 
 /* ============================================================
    מגירת פרטים
@@ -395,15 +398,15 @@ select{
   padding:var(--s4);border-bottom:1px solid var(--line);
   display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s3);
 }
-.drawer-h h3{margin:0;font-size:19px;font-weight:700;line-height:1.3;}
+.drawer-h h3{margin:0;font-size:clamp(19px,1.4vw,26px);font-weight:700;line-height:1.3;}
 .icon-btn{
   border:none;background:transparent;color:var(--muted);cursor:pointer;
   padding:4px;border-radius:var(--r-sm);line-height:0;flex:none;
 }
 .icon-btn:hover{background:var(--sunken);color:var(--ink);}
 .drawer-b{padding:var(--s4);overflow-y:auto;display:flex;flex-direction:column;gap:var(--s4);}
-.dfield dt{font-size:12.5px;color:var(--muted);margin-bottom:2px;}
-.dfield dd{margin:0;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;}
+.dfield dt{font-size:clamp(13px,0.92vw,16px);color:var(--muted);margin-bottom:3px;}
+.dfield dd{margin:0;font-size:clamp(15.5px,1.1vw,20px);font-weight:500;font-variant-numeric:tabular-nums;}
 
 .foot{margin-top:var(--s5);font-size:12.5px;color:var(--muted);text-align:center;}
 
@@ -431,7 +434,7 @@ select{
   .metric-lbl{font-size:12px;}
   .toolbar,.legend{padding:var(--s3);}
   .legend-head h2{font-size:17px;}
-  .chip{padding:8px 15px;font-size:14px;}
+  .chip{padding:9px 16px;}
   .search,.field{flex:1 1 100%;max-width:none;}
   .field select{flex:1;}
   .segmented{width:100%;}
@@ -568,7 +571,7 @@ select{
         </button>
         <div class="period-tabs" role="group" aria-label="בחירת תקופה">
           <button type="button" data-period="0" aria-pressed="true">ספטמבר–פברואר</button>
-          <button type="button" data-period="1" aria-pressed="false">מרץ–אוגוסט</button>
+          <button type="button" data-period="1" aria-pressed="false">מרץ–יוני</button>
         </div>
         <button class="pnav" id="nextPeriod" type="button" aria-label="התקופה הבאה">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -646,7 +649,7 @@ select{
   // שתי תקופות של שישה חודשים
   var PERIODS = [
     { label: "ספטמבר–פברואר", from: 0, to: 5 },
-    { label: "מרץ–אוגוסט",    from: 6, to: 11 }
+    { label: "מרץ–יוני",      from: 6, to: 9 }
   ];
 
   var HEADER_KEYS = {
@@ -1019,7 +1022,12 @@ select{
     return (t.getFullYear() - 2026) * 12 + t.getMonth() - 8;
   }
 
-  function periodOfMonth(mi) { return mi > 5 ? 1 : 0; }
+  function periodOfMonth(mi) {
+    for (var i = 0; i < PERIODS.length; i++) {
+      if (mi >= PERIODS[i].from && mi <= PERIODS[i].to) return i;
+    }
+    return PERIODS.length - 1;   // חודש שמחוץ לתקופות המוצגות
+  }
 
   /* ============================================================
      8. כרטיס אירוע
@@ -1063,6 +1071,8 @@ select{
     var nowMi = currentMonthIndex();
 
     var grid = elem("div", "planner");
+    grid.style.setProperty("--pcols", String(p.to - p.from + 1));
+
     for (var mi = p.from; mi <= p.to; mi++) {
       var m = MONTHS[mi];
       var list = eventsOfMonth(evs, mi);
